@@ -14,7 +14,7 @@ local TextLabel = Instance.new("TextLabel") -- Tạo một TextLabel
 TextLabel.Parent = game.Players.LocalPlayer.PlayerGui:WaitForChild("ScreenGui") -- Đảm bảo TextLabel xuất hiện trong GUI
 TextLabel.Text = "Skull Hub | Click here to copy the Discord link" -- Nội dung văn bản
 TextLabel.Font = Enum.Font.Arcade -- Font giống trong ảnh
-TextLabel.TextSize = 32 -- Kích thước chữ
+TextLabel.TextSize = 45 -- Kích thước chữ
 TextLabel.Size = UDim2.new(0, 400, 0, 50) -- Kích thước vùng chứa
 TextLabel.BackgroundTransparency = 1 -- Nền trong suốt
 TextLabel.Position = UDim2.new(0.5, -200, 0.5, -25) -- Vị trí ở giữa màn hình
@@ -26,7 +26,7 @@ TextLabel.Color = ColorSequence.new({
     ColorSequenceKeypoint.new(0, Color3.fromRGB(135, 206, 250)), -- Màu xanh dương
     ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)) -- Màu trắng
 }) -- Đặt màu cho gradient
-gradient.Rotation = 45 -- Hướng chuyển màu
+TextLabel.Rotation = 45 -- Hướng chuyển màu
 
 
 ---_End
