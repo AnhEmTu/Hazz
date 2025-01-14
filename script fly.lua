@@ -26,7 +26,11 @@ gradient.Color = ColorSequence.new({
     ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 200, 255)), -- Màu xanh dương
     ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)) -- Màu trắng
 })
-gradient.Rotation = 0 -- Hướng chuyển màu
+gradient.Rotation = 10 -- Hướng chuyển màu
+
+TextLabel.MouseButton1Click:Connect(function()
+    setclipboard("https://discord.gg/heSHddPs")  -- Thay "yourlink" bằng liên kết Discord thực tế
+end)
 
 ---_End
 
