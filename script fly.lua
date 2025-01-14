@@ -55,6 +55,11 @@ elseif game.PlaceId == 7449423635 then
     World3 = true
 end
 
+    game:GetService("StarterGui"):SetCore("SendNotification", { 
+    Title = "Đang Tải Fix Lag | Booster",
+        Text = "Done Siêu Pro Fix Lag | Booster",
+        Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150"})
+        Duration = 17;
 local function FPSBooster()
     local decalsyeeted = true
     local g = game
@@ -204,7 +209,7 @@ nowe = false
 game:GetService("StarterGui"):SetCore("SendNotification", { 
     Title = "Đang Tải",
         Text = "Hãy Đợi Chút Nha",
-    Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150"})
+        Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150"})
 Duration = 16;
 
 
