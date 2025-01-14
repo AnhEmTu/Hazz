@@ -1,16 +1,3 @@
--- Phát nhạc khi mã chạy (ID nhạc khi chạy mã là 7817341182)
-local joinSound = Instance.new("Sound")
-joinSound.Name = "JoinSound"
-joinSound.SoundId = "rbxassetid://7475564807" -- ID nhạc khi chạy mã
-joinSound.Volume = 0.3
-joinSound.Looped = false
-joinSound.Parent = workspace
-joinSound:Play()
--- Thông Báo 
-require(game.ReplicatedStorage:WaitForChild("Notification")).new(
-            "<b><color=#66FF66>YUIM</a><color=#FF3300> STAR</a></b> "
-        ):Display()
--- Thông Báo 
-require(game.ReplicatedStorage:WaitForChild("Notification")).new(
-            " <Color=Green>Hẹn gặp lại Bạn <Color=/> "
-        ):Display()        
+local textLabel = script.Parent -- Ví dụ: Thẻ TextLabel
+textLabel.Text = '<font color="rgb(255,0,0)">Đây là chữ đỏ</font> <font color="rgb(0,255,0)">và đây là chữ xanh</font>'
+textLabel.RichText = true -- Kích hoạt RichText
