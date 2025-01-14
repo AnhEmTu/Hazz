@@ -10,23 +10,6 @@ setclipboard("https://discord.gg/heSHddPs")
 
 ---End
 
-local TextLabel = Instance.new("TextLabel") -- Tạo một TextLabel
-TextLabel.Parent = game.Players.LocalPlayer.PlayerGui:WaitForChild("ScreenGui") -- Đảm bảo TextLabel xuất hiện trong GUI
-TextLabel.Text = "Skull Hub | Click here to copy the Discord link" -- Nội dung văn bản
-TextLabel.Font = Enum.Font.Arcade -- Font giống trong ảnh
-TextLabel.TextSize = 45 -- Kích thước chữ
-TextLabel.Size = UDim2.new(0, 400, 0, 50) -- Kích thước vùng chứa
-TextLabel.BackgroundTransparency = 1 -- Nền trong suốt
-TextLabel.Position = UDim2.new(0.5, -200, 0.5, -25) -- Vị trí ở giữa màn hình
-
--- Tạo hiệu ứng 2 màu với UIGradient
-local TextLabel = Instance.new("UIGradient")
-TextLabel.Parent = TextLabel
-TextLabel.Color = ColorSequence.new(
-    Color3.fromRGB(135, 206, 250),
-    Color3.fromRGB(255, 255, 255)
-)
-TextLabel.Rotation = 45
 
 
 
@@ -52,63 +35,6 @@ spawn(function()
 end)
 
 ToggleWalkonWater()
----End.
-
---Chạy Nhanh
-
-local function ToggleSpeedRun()
-ToggleSpeedRun:OnChanged(function(Value)
-    InfAbility = Value
-    if Value == false then
-        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
-    end
-end)
-Options.ToggleSpeedRun:SetValue(true)
-spawn(function()
-    while wait() do
-        if InfAbility then
-            InfAb()
-        end
-    end
-end)
-function InfAb()
-    if InfAbility then
-        if not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility") then
-            local inf = Instance.new("ParticleEmitter")
-            inf.Acceleration = Vector3.new(0,0,0)
-            inf.Archivable = true
-            inf.Drag = 20
-            inf.EmissionDirection = Enum.NormalId.Top
-            inf.Enabled = true
-            inf.Lifetime = NumberRange.new(0,0)
-            inf.LightInfluence = 0
-            inf.LockedToPart = true
-            inf.Name = "Agility"
-            inf.Rate = 500
-            local numberKeypoints2 = {
-                NumberSequenceKeypoint.new(0, 0);
-                NumberSequenceKeypoint.new(1, 4); 
-            }
-            inf.Size = NumberSequence.new(numberKeypoints2)
-            inf.RotSpeed = NumberRange.new(9999, 99999)
-            inf.Rotation = NumberRange.new(0, 0)
-            inf.Speed = NumberRange.new(30, 30)
-            inf.SpreadAngle = Vector2.new(0,0,0,0)
-            inf.Texture = ""
-            inf.VelocityInheritance = 0
-            inf.ZOffset = 2
-            inf.Transparency = NumberSequence.new(0)
-            inf.Color = ColorSequence.new(Color3.fromRGB(0,0,0),Color3.fromRGB(0,0,0))
-            inf.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
-        end
-    else
-        if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility") then
-            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
-        end
-    end
-end
-
-ToggleSpeedRun()
 ---End
 
 ---Xoá Thông Báo
