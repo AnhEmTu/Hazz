@@ -20,13 +20,15 @@ TextLabel.BackgroundTransparency = 1 -- Nền trong suốt
 TextLabel.Position = UDim2.new(0.5, -200, 0.5, -25) -- Vị trí ở giữa màn hình
 
 -- Tạo hiệu ứng 2 màu với UIGradient
-local TextLabel = Instance.new("UIGradient") -- Tạo một UIGradient
-TextLabel.Parent = TextButton -- Gắn gradient vào TextLabel
-TextLabel.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(135, 206, 250)), -- Màu xanh dương
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)) -- Màu trắng
-}) -- Đặt màu cho gradient
-TextLabel.Rotation = 45 -- Hướng chuyển màu
+local TextLabel = Instance.new("UIGradient")
+TextLabel.Parent = TextLabel
+TextLabel.Color = ColorSequence.new(
+    Color3.fromRGB(135, 206, 250),
+    Color3.fromRGB(255, 255, 255)
+)
+TextLabel.Rotation = 45
+
+
 
 
 ---_End
