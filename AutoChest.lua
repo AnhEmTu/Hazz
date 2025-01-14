@@ -8,7 +8,7 @@ joinSound.Parent = workspace
 joinSound:Play()
 -- Thông Báo 
 require(game.ReplicatedStorage:WaitForChild("Notification")).new(
-            " <Color=Red>Cảm ơn Các Bạn Đã Dùng Script, Hiện Không Hoạt Động Nữa<Color=/> "
+            "<b><color=#66FF66>YUIM</a><color=#FF3300> STAR</a></b> "
         ):Display()
 -- Thông Báo 
 require(game.ReplicatedStorage:WaitForChild("Notification")).new(
