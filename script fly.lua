@@ -1,5 +1,6 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer 
 
+
 ---Team
 
 
@@ -9,10 +10,53 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 setclipboard("https://discord.gg/heSHddPs")
 
 ---End
+-- Đặt team bạn muốn tham gia
+-- Bạn có thể thay "Pirates" thành "Marines" nếu muốn chọn Marines
 
 
+-local function chooseTeam()
+    -- Kiểm tra dịch vụ cần thiết
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer
 
+    if not LocalPlayer then
+        print("Không tìm thấy người chơi cục bộ!")
+        return
+    end
 
+    -- Tìm RemoteEvent/RemoteFunction để chọn team
+    local TeamEvent = ReplicatedStorage:FindFirstChild("ChooseTeam")
+    if TeamEvent and TeamEvent:IsA("RemoteEvent") then
+        if getgenv().Team == "Pirates" then
+            TeamEvent:FireServer("Pirates") -- Gửi yêu cầu chọn team Pirates
+            print("Đã chọn team Pirates!")
+        elseif getgenv().Team == "Marines" then
+            TeamEvent:FireServer("Marines") -- Gửi yêu cầu chọn team Marines
+            print("Đã chọn team Marines!")
+        else
+            print("Team không hợp lệ. Vui lòng kiểm tra lại thiết lập.")
+        end
+    else
+        print("Không tìm thấy RemoteEvent chọn team!")
+    end
+end
+
+chooseTeam()
+
+-- Gọi hàm chọn team
+selectTeam()
+task.spawn(function()
+  while getgenv().SetTeam do task.wait()
+function()
+  FireRemote("SetTeam", "Marines")
+end})
+
+task.spawn(function()
+  while getgenv().AutoStoreFruits do task.wait()
+function()
+  FireRemote("SetTeam", "Marines")
+end})
 
 ---_End
 
@@ -80,92 +124,137 @@ local plus = Instance.new("TextButton")
 local speed = Instance.new("TextLabel")
 local mine = Instance.new("TextButton")
 
-----X2
-    local function RedeemCode(Code)
-		game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(Code)
-	end
-    RedeemCode("Sub2Fer999")
-    RedeemCode("Enyu_is_Pro")
-    RedeemCode("Magicbus")
-    RedeemCode("JCWK")
-    RedeemCode("Starcodeheo")
-    RedeemCode("Bluxxy")
-    RedeemCode("THEGREATACE")
-    RedeemCode("SUB2GAMERROBOT_EXP1")
-    RedeemCode("StrawHatMaine")
-    RedeemCode("Sub2OfficialNoobie")
-    RedeemCode("SUB2NOOBMASTER123")
-    RedeemCode("Sub2Daigrock")
-    RedeemCode("Axiore")
-    RedeemCode("TantaiGaming")
-    RedeemCode("STRAWHATMAINE")
     
- RedeemCode()   
-   ---End    
----FPS
+---FPS1
+
+-- Hàm giảm lag và tối ưu hóa hiệu suất
+function OptimizePerformance()
+    if not getgenv().FixCrash then return end
+
+    -- Tắt hiệu ứng không cần thiết trong workspace
+    for _, obj in pairs(workspace:GetDescendants()) do
+        if obj:IsA("ParticleEmitter") or obj:IsA("Trail") or obj:IsA("Smoke") or obj:IsA("Fire") or obj:IsA("Sparkles") then
+            obj.Enabled = false
+        elseif obj:IsA("Explosion") or obj:IsA("ForceField") then
+            obj:Destroy()
+        end
+    end
+
+    -- Tối ưu hóa Lighting
+    local lighting = game.Lighting
+    lighting.GlobalShadows = false
+    lighting.FogEnd = 9e9
+    lighting.Brightness = 1
+
+    -- Giảm chất lượng đồ họa
+    settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+
+    -- Tối ưu hóa nhân vật người chơi
+    local player = game.Players.LocalPlayer
+    if player and player.Character then
+        for _, obj in pairs(player.Character:GetDescendants()) do
+            if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
+                obj.Transparency = 0.9
+            elseif obj:IsA("Accessory") then
+                obj:Destroy()
+            end
+        end
+    end
+
+    -- Tăng SimulationRadius
+    game:GetService("RunService").Stepped:Connect(function()
+        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+    end)
+
+    print("Script giảm lag và tối ưu hóa đã được kích hoạt.")
+end
+
+-- Kích hoạt hàm tối ưu hóa
+OptimizePerformance()
+---En1
+
+---FPS2
+-- Kích hoạt biến FixCrash2
+getgenv().FixCrash2 = true
+
+-- Đợi game tải hoàn toàn
 repeat
     wait()
 until game:IsLoaded()
+
+-- Xác định thế giới (World1, World2, World3)
+local currentWorld = ""
 if game.PlaceId == 2753915549 then
-    World1 = true
+    currentWorld = "World1"
 elseif game.PlaceId == 4442272183 then
-    World2 = true
+    currentWorld = "World2"
 elseif game.PlaceId == 7449423635 then
-    World3 = true
+    currentWorld = "World3"
 end
 
-    game:GetService("StarterGui"):SetCore("SendNotification", { 
+-- Gửi thông báo đến người chơi
+game:GetService("StarterGui"):SetCore("SendNotification", { 
     Title = "Đang Tải Fix Lag | Booster",
-        Text = "Done Siêu Pro Fix Lag | Booster",
-        Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150"})
-        Duration = 17;
+    Text = "Done Siêu Pro Fix Lag | Booster",
+    Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150",
+    Duration = 17
+})
+
+-- Hàm FPSBooster: Tối ưu hiệu suất
 local function FPSBooster()
-    local decalsyeeted = true
+    if not getgenv().FixCrash2 then return end -- Kiểm tra nếu FixCrash2 được bật
+
     local g = game
     local w = g.Workspace
     local l = g.Lighting
     local t = w.Terrain
+    local decalsHidden = true
 
+    -- Tối ưu hóa Lighting và Terrain
     sethiddenproperty(l, "Technology", Enum.Technology.Compatibility)
     sethiddenproperty(t, "Decoration", false)
-    
     t.WaterWaveSize = 0
     t.WaterWaveSpeed = 0
     t.WaterReflectance = 0
     t.WaterTransparency = 0
-    
     l.GlobalShadows = false
     l.FogEnd = 9e9
     l.Brightness = 0
-    
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
-    
-    for _, v in pairs(g:GetDescendants()) do
-        if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-            v.Material = Enum.Material.Plastic
-            v.Reflectance = 0
-        elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
-            v.Transparency = 1
-        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-            v.Lifetime = NumberRange.new(0)
-        elseif v:IsA("Explosion") then
-            v.BlastPressure = 1
-            v.BlastRadius = 1
-        elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-            v.Enabled = false
-        elseif v:IsA("MeshPart") then
-            v.Material = Enum.Material.Plastic
-            v.Reflectance = 0
+
+    -- Tối ưu hóa các đối tượng trong game
+    for _, obj in pairs(g:GetDescendants()) do
+        if obj:IsA("Part") or obj:IsA("Union") or obj:IsA("CornerWedgePart") or obj:IsA("TrussPart") then
+            obj.Material = Enum.Material.Plastic
+            obj.Reflectance = 0
+        elseif obj:IsA("Decal") or obj:IsA("Texture") and decalsHidden then
+            obj.Transparency = 1
+        elseif obj:IsA("ParticleEmitter") or obj:IsA("Trail") then
+            obj.Lifetime = NumberRange.new(0)
+        elseif obj:IsA("Explosion") then
+            obj.BlastPressure = 1
+            obj.BlastRadius = 1
+        elseif obj:IsA("Fire") or obj:IsA("SpotLight") or obj:IsA("Smoke") or obj:IsA("Sparkles") then
+            obj.Enabled = false
+        elseif obj:IsA("MeshPart") then
+            obj.Material = Enum.Material.Plastic
+            obj.Reflectance = 0
         end
     end
-    
-    for _, e in pairs(l:GetChildren()) do
-        if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
-            e.Enabled = false
+
+    -- Tắt các hiệu ứng ánh sáng
+    for _, effect in pairs(l:GetChildren()) do
+        if effect:IsA("BlurEffect") or effect:IsA("SunRaysEffect") or 
+           effect:IsA("ColorCorrectionEffect") or effect:IsA("BloomEffect") or 
+           effect:IsA("DepthOfFieldEffect") then
+            effect.Enabled = false
         end
     end
+
+    print("FPS Booster đã được kích hoạt!")
 end
 
+-- Kích hoạt hàm tối ưu hóa
 FPSBooster()
 
 --Properties:
@@ -550,3 +639,118 @@ mine.MouseButton1Down:connect(function()
         end
         end
 end)
+
+
+----X2
+Callback = function()
+    local Codes = {
+      "REWARDFUN",
+      "Chandler",
+      "NEWTROLL",
+      "KITT_RESET",
+      "Sub2CaptainMaui",
+      "DEVSCOOKING",
+      "kittgaming",
+      "Sub2Fer999",
+      "Enyu_is_Pro",
+      "Magicbus",
+      "JCWK",
+      "Starcodeheo",
+      "Bluxxy",
+      "fudd10_v2",
+      "SUB2GAMERROBOT_EXP1",
+      "Sub2NoobMaster123",
+      "Sub2UncleKizaru",
+      "Sub2Daigrock",
+      "Axiore",
+      "TantaiGaming",
+      "StrawHatMaine",
+      "Sub2OfficialNoobie",
+      "Fudd10",
+      "Bignews",
+      "TheGreatAce",
+      "DRAGONABUSE",
+      "SECRET_ADMIN",
+      "ADMIN_TROLL",
+      "STAFFBATTLE",
+      "ADMIN_STRENGTH",
+      "JULYUPDATE_RESET",
+      "NOOB_REFUND",
+      "15B_BESTBROTHERS",
+      "CINCODEMAYO_BOOST",
+      "ADMINGIVEAWAY",
+      "GAMER_ROBOT_1M",
+      "SUBGAMERROBOT_RESET",
+      "SUB2GAMERROBOT_RESET1",
+      "GAMERROBOT_YT",
+      "TY_FOR_WATCHING",
+      "EXP_5B",
+      "RESET_5B",
+      "UPD16",
+      "3BVISITS",
+      "2BILLION",
+      "UPD15",
+      "THIRDSEA",
+      "1MLIKES_RESET",
+      "UPD14",
+      "1BILLION",
+      "ShutDownFix2",
+      "XmasExp",
+      "XmasReset",
+      "Update11",
+      "PointsReset",
+      "Update10",
+      "Control",
+      "SUB2OFFICIALNOOBIE",
+      "AXIORE",
+      "BIGNEWS",
+      "BLUXXY",
+      "CHANDLER",
+      "ENYU_IS_PRO",
+      "FUDD10",
+      "FUDD10_V2",
+      "KITTGAMING",
+      "MAGICBUS",
+      "STARCODEHEO",
+      "STRAWHATMAINE",
+      "SUB2CAPTAINMAUI",
+      "SUB2DAIGROCK",
+      "SUB2FER999",
+      "SUB2NOOBMASTER123",
+      "SUB2UNCLEKIZARU",
+      "TANTAIGAMING",
+      "THEGREATACE",
+      "CONTROL",
+      "UPDATE11",
+      "XMASEXP",
+      "Colosseum"
+    }
+    
+    for _,code in pairs(Codes) do
+      task.spawn(function()ReplicatedStorage.Remotes.Redeem:InvokeServer(code)end)
+    end
+  end
+
+
+    local function RedeemCode(Code)
+		game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(Code)
+	end
+    RedeemCode("Sub2Fer999")
+    RedeemCode("Enyu_is_Pro")
+    RedeemCode("Magicbus")
+    RedeemCode("JCWK")
+    RedeemCode("Starcodeheo")
+    RedeemCode("Bluxxy")
+    RedeemCode("THEGREATACE")
+    RedeemCode("SUB2GAMERROBOT_EXP1")
+    RedeemCode("StrawHatMaine")
+    RedeemCode("Sub2OfficialNoobie")
+    RedeemCode("SUB2NOOBMASTER123")
+    RedeemCode("Sub2Daigrock")
+    RedeemCode("Axiore")
+    RedeemCode("TantaiGaming")
+    RedeemCode("STRAWHATMAINE")
+    RedeemCode()   
+    require(game.ReplicatedStorage:WaitForChild("Notification")).new(
+            " <Color=Green>Đã Kích Hoạt Code <Color=/> "
+        ):Display()---End    
