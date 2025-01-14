@@ -20,13 +20,13 @@ TextLabel.BackgroundTransparency = 1 -- Nền trong suốt
 TextLabel.Position = UDim2.new(0.5, -200, 0.5, -25) -- Vị trí ở giữa màn hình
 
 -- Tạo hiệu ứng 2 màu với UIGradient
-local Text = Instance.new("UIGradient")
-Text.Parent = TextButton
-Text.Color = ColorSequence.new(
-    Color3.fromRGB(135, 206, 250),
-    Color3.fromRGB(255, 255, 255)
-)
-Text.Rotation = 45
+local gradient = Instance.new("UIGradient") -- Tạo một UIGradient
+gradient.Parent = TextButton -- Gắn gradient vào TextLabel
+gradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(135, 206, 250)), -- Màu xanh dương
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)) -- Màu trắng
+}) -- Đặt màu cho gradient
+gradient.Rotation = 45 -- Hướng chuyển màu
 
 TextLabel.MouseButton1Click:Connect(function()
     setclipboard("https://discord.gg/heSHddPs")  -- Thay "yourlink" bằng liên kết Discord thực tế
