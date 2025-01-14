@@ -33,6 +33,117 @@ TextLabel.Rotation = 45
 
 ---_End
 
+--Đi Nc
+local function ToggleWalkonWater()
+ToggleWalkonWater:OnChanged(function(Value)
+  _G.WalkonWater = Value
+end)
+Options.ToggleWalkonWater:SetValue(true)
+spawn(function()
+  while task.wait() do
+    pcall(function()
+      if _G.WalkonWater then
+        game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,112,1000)
+      else
+        game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,80,1000)
+      end
+    end)
+  end
+end)
+
+ToggleWalkonWater()
+---End.
+
+--Chạy Nhanh
+
+local function ToggleSpeedRun()
+ToggleSpeedRun:OnChanged(function(Value)
+    InfAbility = Value
+    if Value == false then
+        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
+    end
+end)
+Options.ToggleSpeedRun:SetValue(true)
+spawn(function()
+    while wait() do
+        if InfAbility then
+            InfAb()
+        end
+    end
+end)
+function InfAb()
+    if InfAbility then
+        if not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility") then
+            local inf = Instance.new("ParticleEmitter")
+            inf.Acceleration = Vector3.new(0,0,0)
+            inf.Archivable = true
+            inf.Drag = 20
+            inf.EmissionDirection = Enum.NormalId.Top
+            inf.Enabled = true
+            inf.Lifetime = NumberRange.new(0,0)
+            inf.LightInfluence = 0
+            inf.LockedToPart = true
+            inf.Name = "Agility"
+            inf.Rate = 500
+            local numberKeypoints2 = {
+                NumberSequenceKeypoint.new(0, 0);
+                NumberSequenceKeypoint.new(1, 4); 
+            }
+            inf.Size = NumberSequence.new(numberKeypoints2)
+            inf.RotSpeed = NumberRange.new(9999, 99999)
+            inf.Rotation = NumberRange.new(0, 0)
+            inf.Speed = NumberRange.new(30, 30)
+            inf.SpreadAngle = Vector2.new(0,0,0,0)
+            inf.Texture = ""
+            inf.VelocityInheritance = 0
+            inf.ZOffset = 2
+            inf.Transparency = NumberSequence.new(0)
+            inf.Color = ColorSequence.new(Color3.fromRGB(0,0,0),Color3.fromRGB(0,0,0))
+            inf.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+        end
+    else
+        if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility") then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
+        end
+    end
+end
+
+ToggleSpeedRun()
+---End
+
+---Xoá Thông Báo
+local function ToggleRemoveNotify()
+ToggleRemoveNotify:OnChanged(function(Value)
+    RemoveNotify = Value
+    end)
+    Options.ToggleRemoveNotify:SetValue(false)
+
+    spawn(function()
+        while wait() do
+            if RemoveNotify then
+                game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = false
+            else
+                game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = true
+            end
+        end
+    end)
+   
+ ToggleRemoveNotify()
+   ---End
+   
+ ---Xoá Xương
+ local function NoFog()
+    local c = game.Lighting
+    c.FogEnd = 100000
+    for r, v in pairs(c:GetDescendants()) do
+        if v:IsA("Atmosphere") then
+            v:Destroy()
+        end
+    end
+end
+
+NoFog()
+---End
 local main = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local up = Instance.new("TextButton")
@@ -43,6 +154,28 @@ local plus = Instance.new("TextButton")
 local speed = Instance.new("TextLabel")
 local mine = Instance.new("TextButton")
 
+----X2
+    local function RedeemCode(Code)
+		game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(Code)
+	end
+    RedeemCode("Sub2Fer999")
+    RedeemCode("Enyu_is_Pro")
+    RedeemCode("Magicbus")
+    RedeemCode("JCWK")
+    RedeemCode("Starcodeheo")
+    RedeemCode("Bluxxy")
+    RedeemCode("THEGREATACE")
+    RedeemCode("SUB2GAMERROBOT_EXP1")
+    RedeemCode("StrawHatMaine")
+    RedeemCode("Sub2OfficialNoobie")
+    RedeemCode("SUB2NOOBMASTER123")
+    RedeemCode("Sub2Daigrock")
+    RedeemCode("Axiore")
+    RedeemCode("TantaiGaming")
+    RedeemCode("STRAWHATMAINE")
+    
+ RedeemCode()   
+   ---End    
 ---FPS
 repeat
     wait()
