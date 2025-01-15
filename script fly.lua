@@ -746,3 +746,160 @@ local function AutoInteract()
 end
 
 AutoInteract()
+
+-- Tự động nâng cấp sức mạnh
+local function AutoUpgradeStats()
+    if not getgenv().AutoUpgrade then return end
+    local player = game.Players.LocalPlayer
+    local stats = player:WaitForChild("leaderstats")  -- Giả sử stats được lưu trong leaderstats
+
+    -- Định nghĩa các mức nâng cấp
+    local upgradeThreshold = 100  -- Ngưỡng điểm cần để nâng cấp
+
+    -- Cập nhật các chỉ số
+    while wait(1) do
+        if stats and stats.Strength and stats.Strength.Value >= upgradeThreshold then
+            -- Nâng cấp Strength (ví dụ)
+            player.Character.Humanoid.Health = player.Character.Humanoid.Health + 10  -- Tăng thêm máu
+            stats.Strength.Value = stats.Strength.Value - upgradeThreshold  -- Giảm điểm sau khi nâng cấp
+            print("Đã nâng cấp Strength!")
+        end
+    end
+end
+
+-- Kích hoạt AutoUpgrade
+AutoUpgradeStats()
+
+-- Tự động chiến đấu
+local function AutoFarm()
+    if not getgenv().AutoFarm then return end
+
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+
+    -- Tự động tìm kiếm quái vật gần đó và tấn công
+    while wait(1) do
+        local nearestEnemy = nil
+        local shortestDistance = math.huge
+
+        -- Tìm kiếm quái vật gần nhất
+        for _, enemy in pairs(workspace:GetChildren()) do
+            if enemy:IsA("Model") and enemy:FindFirstChild("Humanoid") then
+                local distance = (character.HumanoidRootPart.Position - enemy.HumanoidRootPart.Position).Magnitude
+                if distance < shortestDistance then
+                    nearestEnemy = enemy
+                    shortestDistance = distance
+                end
+            end
+        end
+
+        -- Tấn công nếu tìm thấy quái vật
+        if nearestEnemy then
+            -- Di chuyển đến quái vật và tấn công (bạn có thể sử dụng các kỹ năng của nhân vật tại đây)
+            humanoid:MoveTo(nearestEnemy.HumanoidRootPart.Position)
+            -- Có thể thay thế bằng các kỹ năng cụ thể khi quái vật ở gần
+            print("Đang tấn công quái vật: " .. nearestEnemy.Name)
+        end
+    end
+end
+
+-- Kích hoạt AutoFarm
+AutoFarm()
+
+-- Tự động học kỹ năng
+local function AutoLearnSkills()
+    if not getgenv().AutoLearnSkills then return end
+
+    local player = game.Players.LocalPlayer
+    local skills = player:WaitForChild("Skills")  -- Giả sử kỹ năng lưu trong một folder Skills
+
+    while wait(1) do
+        for _, skill in pairs(skills:GetChildren()) do
+            if skill:IsA("IntValue") and skill.Value > 0 then
+                -- Học kỹ năng nếu có đủ điểm
+                -- Bạn có thể thêm logic kiểm tra điểm để học kỹ năng
+                print("Đã học kỹ năng: " .. skill.Name)
+                skill.Value = 0  -- Reset điểm kỹ năng sau khi học
+            end
+        end
+    end
+end
+
+-- Kích hoạt AutoLearnSkills
+AutoLearnSkills()
+
+-- Tự động thu thập Devil Fruits
+local function AutoCollectDevilFruits()
+    if not getgenv().AutoCollectFruits then return end
+
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+    while wait(0.5) do
+        for _, item in pairs(workspace:GetDescendants()) do
+            if item:IsA("Model") and item.Name == "DevilFruit" then
+                if (humanoidRootPart.Position - item.PrimaryPart.Position).Magnitude < 15 then
+                    firetouchinterest(humanoidRootPart, item.PrimaryPart, 0)
+                    wait(0.1)
+                    firetouchinterest(humanoidRootPart, item.PrimaryPart, 1)
+                    print("Đã thu thập trái ác quỷ: " .. item.Name)
+                end
+            end
+        end
+    end
+end
+
+-- Kích hoạt AutoCollectDevilFruits
+AutoCollectDevilFruits()
+
+-- Tự động tránh combat
+local function AutoAvoidCombat()
+    if not getgenv().AutoAvoidCombat then return end
+
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+
+    -- Đặt khoảng cách an toàn từ kẻ thù
+    local safeDistance = 50
+
+    while wait(1) do
+        for _, enemy in pairs(workspace:GetChildren()) do
+            if enemy:IsA("Model") and enemy:FindFirstChild("Humanoid") then
+                local distance = (character.HumanoidRootPart.Position - enemy.HumanoidRootPart.Position).Magnitude
+                if distance < safeDistance then
+                    -- Chạy trốn khỏi kẻ thù
+                    local direction = (character.HumanoidRootPart.Position - enemy.HumanoidRootPart.Position).unit
+                    humanoid:MoveTo(character.HumanoidRootPart.Position + direction * safeDistance)
+                    print("Đang tránh kẻ thù!")
+                end
+            end
+        end
+    end
+end
+
+-- Kích hoạt AutoAvoidCombat
+AutoAvoidCombat()
+
+-- Tự động sử dụng kỹ năng đặc biệt
+local function AutoUseSkill()
+    if not getgenv().AutoUseSkill then return end
+
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+
+    -- Kiểm tra khi cần dùng kỹ năng
+    while wait(1) do
+        if humanoid.Health < humanoid.MaxHealth / 2 then
+            -- Sử dụng kỹ năng chữa trị hoặc kỹ năng đặc biệt
+            print("Sử dụng kỹ năng chữa trị!")
+            -- Thực hiện hành động sử dụng kỹ năng (có thể là gọi đến một phương thức trong game)
+        end
+    end
+end
+
+-- Kích hoạt AutoUseSkill
+AutoUseSkill()
