@@ -158,7 +158,7 @@ function UpdateRunFast()
         local humanoid = player.Character:FindFirstChild("Humanoid")
         if humanoid then
             if getgenv().RunFast then
-                humanoid.WalkSpeed = getgenv().Speed or 300  -- Sử dụng giá trị Speed nếu có
+                humanoid.WalkSpeed = getgenv().Speed or 100  -- Sử dụng giá trị Speed nếu có
             else
                 humanoid.WalkSpeed = 16
             end
