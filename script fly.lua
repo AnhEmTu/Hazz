@@ -48,26 +48,6 @@ chooseTeam()
 
 ---_End
 
---Đi Nc
-local function ToggleWalkonWater()
-ToggleWalkonWater:OnChanged(function(Value)
-  _G.WalkonWater = Value
-end)
-Options.ToggleWalkonWater:SetValue(true)
-spawn(function()
-  while task.wait() do
-    pcall(function()
-      if _G.WalkonWater then
-        game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,112,1000)
-      else
-        game:GetService("Workspace").Map["WaterBase-Plane"].Size = Vector3.new(1000,80,1000)
-      end
-    end)
-  end
-end)
-
-ToggleWalkonWater()
----End
 
 ---Xoá Thông Báo
 local function ToggleRemoveNotify()
