@@ -8,7 +8,7 @@ setclipboard("https://discord.gg/heSHddPs")
 function OptimizePerformance()
     if not getgenv().FixCrash then return end
 
-    -- Disable unnecessary effects in workspace
+    -- Tắt các hiệu ứng không cần thiết trong workspace
     for _, obj in pairs(workspace:GetDescendants()) do
         if obj:IsA("ParticleEmitter") or obj:IsA("Trail") or obj:IsA("Smoke") or obj:IsA("Fire") or obj:IsA("Sparkles") then
             obj.Enabled = false
@@ -17,19 +17,18 @@ function OptimizePerformance()
         end
     end
 
-    -- Optimize Lighting settings
+    -- Tối ưu hóa cài đặt Lighting
     local lighting = game.Lighting
     lighting.GlobalShadows = false
     lighting.FogEnd = 9e9
     lighting.Brightness = 1
 
-    -- Lower graphic quality
+    -- Giảm chất lượng đồ họa
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 
-    -- Optimize player character
-    local player = game.Players.LocalPlayer
-    if player and player.Character then
-        for _, obj in pairs(player.Character:GetDescendants()) do
+    -- Tối ưu hóa nhân vật người chơi
+    local function OptimizeCharacter(character)
+        for _, obj in pairs(character:GetDescendants()) do
             if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
                 obj.Transparency = 0.9
             elseif obj:IsA("Accessory") then
@@ -38,13 +37,56 @@ function OptimizePerformance()
         end
     end
 
-    -- Increase SimulationRadius
+    -- Áp dụng tối ưu hóa nhân vật khi nhân vật người chơi được thêm vào
+    local player = game.Players.LocalPlayer
+    if player and player.Character then
+        OptimizeCharacter(player.Character)
+    end
+
+    -- Đảm bảo tối ưu hóa vẫn được áp dụng khi nhân vật bị hạ gục và tái sinh
+    player.CharacterAdded:Connect(function(character)
+        OptimizeCharacter(character)
+    end)
+
+    -- Tăng SimulationRadius
     game:GetService("RunService").Stepped:Connect(function()
         sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
     end)
+
+    -- Tối ưu hóa quái vật và boss
+    local function OptimizeEnemy(enemy)
+        if enemy:IsA("Model") then
+            for _, obj in pairs(enemy:GetDescendants()) do
+                if obj:IsA("Part") or obj:IsA("MeshPart") then
+                    obj.Material = Enum.Material.Plastic
+                    obj.Reflectance = 0
+                elseif obj:IsA("ParticleEmitter") or obj:IsA("Trail") or obj:IsA("Smoke") or obj:IsA("Fire") or obj:IsA("Sparkles") then
+                    obj.Enabled = false
+                elseif obj:IsA("Decal") or obj:IsA("Texture") then
+                    obj.Transparency = 1
+                elseif obj:IsA("Accessory") then
+                    obj:Destroy()
+                end
+            end
+        end
+    end
+
+    -- Áp dụng tối ưu hóa cho tất cả quái vật và boss
+    for _, enemy in pairs(workspace:GetDescendants()) do
+        if enemy:IsA("Model") and (enemy:FindFirstChild("Humanoid") or enemy:FindFirstChild("Boss")) then
+            OptimizeEnemy(enemy)
+        end
+    end
+
+    -- Đảm bảo tối ưu hóa vẫn được áp dụng khi quái vật/boss được tạo ra mới
+    workspace.DescendantAdded:Connect(function(obj)
+        if obj:IsA("Model") and (obj:FindFirstChild("Humanoid") or obj:FindFirstChild("Boss")) then
+            OptimizeEnemy(obj)
+        end
+    end)
 end
 
--- Activate FPS optimization function
+-- Kích hoạt chức năng tối ưu hóa FPS
 OptimizePerformance()
 
 --- FPS2: Further Optimizations for FPS
