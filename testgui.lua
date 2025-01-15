@@ -1,21 +1,21 @@
 -- Chức năng tự động chọn team trong Block Fruit
 local function AutoSelectBlockFruitTeam()
-    if not getgenv().Team then return end  -- Kiểm tra xem có chọn team hay không
+    if not getgenv().Team then 
+        warn("Chưa chọn team!") 
+        return 
+    end  -- Kiểm tra xem có chọn team hay không
 
-    local player = game.Players.LocalPlayer
-    local teamName = getgenv().Team  -- Lấy giá trị team từ getgenv()
+    -- Kiểm tra và chọn team nếu có giá trị cho Team
+    local teamName = getgenv().Team  -- Lấy tên team từ getgenv().Team
+    local validTeams = {"Marines", "Pirates"}  -- Các team hợp lệ
 
-    -- Kiểm tra xem team có tồn tại không trong game
-    local team = game:GetService("Teams"):FindFirstChild(teamName)
-
-    -- Nếu tìm thấy team, thay đổi team của người chơi
-    if team then
-        player.Team = team
-        print("Đã chọn team: " .. team.Name)
+    if table.find(validTeams, teamName) then
+        -- Chọn team hợp lệ
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", teamName)
+        print("Đã chọn team: " .. teamName)
     else
-        print("Không tìm thấy team với tên: " .. teamName)
+        warn("Team không hợp lệ: " .. teamName)
     end
 end
 
--- Kích hoạt chức năng chọn team trong Block Fruit
-AutoSelectBlockFruitTeam()
+AutoSelectBlockFruitTeam()  -- Gọi hàm để thực hiện chọn team
