@@ -1,8 +1,9 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 
---- Team
 -- Discord link
 setclipboard("https://discord.gg/heSHddPs")
+
+----End
 
 --- FPS1: Optimize Performance Function
 function OptimizePerformance()
@@ -55,7 +56,9 @@ function OptimizePerformance()
 
     -- Tăng SimulationRadius
     game:GetService("RunService").Stepped:Connect(function()
-        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+        pcall(function()
+            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+        end)
     end)
 
     -- Tối ưu hóa quái vật và boss
@@ -76,35 +79,15 @@ function OptimizePerformance()
         end
     end
 
-    -- Tối ưu hóa quái vật thường và boss
-    local function OptimizeBossAndMonsters(enemy)
-        if enemy:IsA("Model") then
-            -- Kiểm tra nếu đối tượng có Humanoid, có thể là quái vật hoặc boss
-            if enemy:FindFirstChild("Humanoid") then
-                -- Kiểm tra nếu là boss, nếu có thể phân biệt qua tên hoặc thuộc tính
-                if enemy:FindFirstChild("Boss") then
-                    -- Tối ưu hóa boss
-                    print("Optimizing Boss")
-                    OptimizeEnemy(enemy)
-                else
-                    -- Tối ưu hóa quái vật thường
-                    print("Optimizing Regular Monster")
-                    OptimizeEnemy(enemy)
-                end
-            end
-        end
-    end
-
     -- Áp dụng tối ưu hóa cho tất cả quái vật và boss trong game
     for _, enemy in pairs(workspace:GetDescendants()) do
-        OptimizeBossAndMonsters(enemy)
+        OptimizeEnemy(enemy)
     end
 
     -- Đảm bảo tối ưu hóa quái vật và boss mới xuất hiện
     workspace.DescendantAdded:Connect(function(obj)
-        OptimizeBossAndMonsters(obj)
+        OptimizeEnemy(obj)
     end)
-
 end
 
 -- Kích hoạt chức năng tối ưu hóa FPS
@@ -121,8 +104,9 @@ local function FPSBooster()
     local decalsHidden = true
 
     -- Lighting and Terrain optimizations
-    sethiddenproperty(l, "Technology", Enum.Technology.Compatibility)
-    sethiddenproperty(t, "Decoration", false)
+    pcall(function()
+        sethiddenproperty(l, "Technology", Enum.Technology.Compatibility)
+    end)
     t.WaterWaveSize = 0
     t.WaterWaveSpeed = 0
     t.WaterReflectance = 0
@@ -166,27 +150,25 @@ end
 
 -- Activate FPS booster function
 FPSBooster()
- 
- -----Chạy Nhanh
- -- Chức năng chạy nhanh
+
+--- Chạy nhanh: Tăng tốc độ di chuyển
 function UpdateRunFast()
     local player = game.Players.LocalPlayer
     if player and player.Character then
         local humanoid = player.Character:FindFirstChild("Humanoid")
         if humanoid then
-            -- Kiểm tra nếu tính năng chạy nhanh được bật
             if getgenv().RunFast then
-                humanoid.WalkSpeed = 300  -- Tăng tốc độ di chuyển khi bật
+                humanoid.WalkSpeed = getgenv().Speed or 300  -- Sử dụng giá trị Speed nếu có
             else
-                humanoid.WalkSpeed = 16   -- Tốc độ mặc định khi tắt
+                humanoid.WalkSpeed = 16
             end
         end
     end
 end
 
--- Kiểm tra và kích hoạt chức năng chạy nhanh mỗi khi trạng thái RunFast thay đổi
+-- Cập nhật tốc độ di chuyển liên tục
 game:GetService("RunService").Heartbeat:Connect(function()
-    UpdateRunFast()
+    pcall(UpdateRunFast)
 end)
 
 ----End
