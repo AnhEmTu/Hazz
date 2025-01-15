@@ -421,26 +421,7 @@ mine.MouseButton1Down:connect(function()
 end)
 -----End
 
--- Tối ưu hóa nhân vật người chơi
-local function OptimizeCharacter(character)
-    for _, obj in pairs(character:GetDescendants()) do
-        if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
-            obj.Transparency = 0.9
-        elseif obj:IsA("Accessory") then
-            obj:Destroy()
-        end
-    end
-end
 
--- Tối ưu hóa nhân vật của người chơi
-local player = game.Players.LocalPlayer
-if player and player.Character then
-    OptimizeCharacter(player.Character)
-end
-
-player.CharacterAdded:Connect(function(character)
-    OptimizeCharacter(character)
-end)
 
 -- FPS Optimization
 function OptimizePerformance()
@@ -465,14 +446,30 @@ function OptimizePerformance()
     -- Giảm chất lượng đồ họa
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 
-    -- Tối ưu hóa nhân vật
-    if player and player.Character then
-        OptimizeCharacter(player.Character)
+-- Tối ưu hóa nhân vật người chơi
+-- Tối ưu hóa nhân vật
+local function OptimizeCharacter(character)
+    -- Duyệt qua tất cả các đối tượng trong nhân vật
+    for _, obj in pairs(character:GetDescendants()) do
+        -- Xử lý các đối tượng Decal và Texture
+        if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
+            obj.Transparency = 0.9  -- Đặt độ trong suốt cao
+        elseif obj:IsA("Accessory") then
+            obj:Destroy()  -- Xóa phụ kiện không cần thiết
+        end
     end
+end
 
-    player.CharacterAdded:Connect(function(character)
-        OptimizeCharacter(character)
-    end)
+-- Áp dụng tối ưu hóa nhân vật khi nhân vật được thêm vào
+local player = game.Players.LocalPlayer
+if player and player.Character then
+    OptimizeCharacter(player.Character)
+end
+
+-- Đảm bảo tối ưu hóa vẫn được áp dụng khi nhân vật bị hạ gục và tái sinh
+player.CharacterAdded:Connect(function(character)
+    OptimizeCharacter(character)
+end)
 
     -- Tăng SimulationRadius
     game:GetService("RunService").Stepped:Connect(function()
