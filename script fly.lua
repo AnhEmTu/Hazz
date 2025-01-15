@@ -14,48 +14,29 @@ setclipboard("https://discord.gg/heSHddPs")
 -- Gọi hàm chọn team
 
 ---_End
-
-
----Xoá Thông Báo
--- Hàm để bật/tắt thông báo
-function SetThongBao(state)
-    getgenv().Thông_báo = state  -- Thiết lập trạng thái thông báo
-
-    if getgenv().Thông_báo then
-        print("Thông báo đã được bật.")
-    else
-        print("Thông báo đã bị tắt.")
-        -- Xóa thông báo nếu trạng thái là false
-        for _, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
-            if v.Name == "NotificationGui" then
-                v:Destroy()
-            end
-        end
-    end
-end
-
--- Kiểm tra và thực thi trạng thái của thông báo từ bên ngoài script
-while true do
-    wait(1)  -- Chờ một chút để giảm tải cho hệ thống
-    if getgenv().Thông_báo ~= nil then
-        -- Thực hiện bật hoặc tắt thông báo dựa trên giá trị của getgenv().Thông_báo
-        SetThongBao(getgenv().Thông_báo)
-    end
-end
-   ---End
    
  ---Xoá Xương
- local function NoFog()
-    local c = game.Lighting
-    c.FogEnd = 100000
-    for r, v in pairs(c:GetDescendants()) do
-        if v:IsA("Atmosphere") then
-            v:Destroy()
-        end
-    end
+ -- Lấy dịch vụ Lighting (Ánh sáng) trong Roblox
+-- Lấy dịch vụ Lighting trong Roblox
+local Lighting = game:GetService("Lighting")
+
+-- Định nghĩa chức năng để xóa xương mù
+local function xoaXuongMu()
+    Lighting.FogStart = 1000000  -- Đặt FogStart rất cao để xương mù không xuất hiện gần người chơi
+    Lighting.FogEnd = 1000000    -- Đặt FogEnd cũng rất cao để xương mù không ảnh hưởng xa
+    Lighting.FogColor = Color3.fromRGB(255, 255, 255) -- Màu sắc của xương mù (có thể chỉnh theo ý muốn)
 end
 
-NoFog()
+-- Xóa xương mù ngay khi game bắt đầu
+xoaXuongMu()
+
+-- Gọi chức năng xóa xương mù khi người chơi nhấn phím "F"
+game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+    if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode.F then
+        xoaXuongMu()  -- Gọi hàm khi người chơi nhấn phím "F"
+    end
+end)
+
 ---End
 local main = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
@@ -118,7 +99,7 @@ OptimizePerformance()
 
 ---FPS2
 -- Kích hoạt biến FixCrash2
-getgenv().FixCrash2 = true
+
 
 -- Đợi game tải hoàn toàn
 repeat
