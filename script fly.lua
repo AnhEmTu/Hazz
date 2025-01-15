@@ -10,39 +10,6 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 setclipboard("https://discord.gg/heSHddPs")
 
 ---End
--- Đặt team bạn muốn tham gia
--- Bạn có thể thay "Pirates" thành "Marines" nếu muốn chọn Marines
-
-
-local function chooseTeam()
-    -- Kiểm tra dịch vụ cần thiết
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local Players = game:GetService("Players")
-    local LocalPlayer = Players.LocalPlayer
-
-    if not LocalPlayer then
-        print("Không tìm thấy người chơi cục bộ!")
-        return
-    end
-
-    -- Tìm RemoteEvent/RemoteFunction để chọn team
-    local TeamEvent = ReplicatedStorage:FindFirstChild("ChooseTeam")
-    if TeamEvent and TeamEvent:IsA("RemoteEvent") then
-        if getgenv().Team == "Pirates" then
-            TeamEvent:FireServer("Pirates") -- Gửi yêu cầu chọn team Pirates
-            print("Đã chọn team Pirates!")
-        elseif getgenv().Team == "Marines" then
-            TeamEvent:FireServer("Marines") -- Gửi yêu cầu chọn team Marines
-            print("Đã chọn team Marines!")
-        else
-            print("Team không hợp lệ. Vui lòng kiểm tra lại thiết lập.")
-        end
-    else
-        print("Không tìm thấy RemoteEvent chọn team!")
-    end
-end
-
-chooseTeam()
 
 -- Gọi hàm chọn team
 
