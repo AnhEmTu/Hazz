@@ -946,3 +946,33 @@ local RunService = game:GetService("RunService")
 RunService.Heartbeat:Connect(function()
     danhXa()  -- Gọi hàm kiểm tra và thực hiện đánh xa
 end)
+
+-- Đảm bảo rằng mã này đang chạy trong môi trường được phép, như trong một LocalScript hoặc ServerScript
+
+-- Hàm gom quái
+function BringMobsToPlayer()
+    local player = game.Players.LocalPlayer  -- Lấy người chơi hiện tại
+    local character = player.Character or player.CharacterAdded:Wait()  -- Lấy nhân vật của người chơi
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")  -- Lấy phần gốc của nhân vật
+
+    -- Lặp qua tất cả các quái vật trong game
+    for _, mob in pairs(workspace.Mobs:GetChildren()) do  -- Giả sử quái vật nằm trong workspace.Mobs
+        if mob:IsA("Model") and mob:FindFirstChild("Humanoid") then  -- Kiểm tra nếu đối tượng là một quái vật
+            local mobHumanoidRootPart = mob:FindFirstChild("HumanoidRootPart")
+            if mobHumanoidRootPart then
+                -- Di chuyển quái vật đến gần người chơi nếu biến BringMob là true
+                if getgenv().BringMob then
+                    mobHumanoidRootPart.CFrame = humanoidRootPart.CFrame + Vector3.new(math.random(-5, 5), 0, math.random(-5, 5))
+                end
+            end
+        end
+    end
+end
+
+-- Gọi hàm gom quái mỗi khi cần
+while true do
+    if getgenv().BringMob then
+        BringMobsToPlayer()
+    end
+    wait(1)  -- Đợi một giây trước khi lặp lại
+end
