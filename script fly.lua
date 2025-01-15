@@ -5,6 +5,41 @@ setclipboard("https://discord.gg/heSHddPs")
 
 ----End
 
+---Chữ 2 màu
+-- Hiển thị chữ 2 màu
+local function CreateText()
+    if getgenv().HideText then return end -- Nếu HideText = true thì ẩn text
+
+    local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    local screenGui = Instance.new("ScreenGui", playerGui)
+    screenGui.Name = "TextDisplay"
+
+    local textLabel = Instance.new("TextLabel", screenGui)
+    textLabel.Size = UDim2.new(0, 400, 0, 50)
+    textLabel.Position = UDim2.new(0.5, -200, 0.1, 0) -- Canh giữa màn hình
+    textLabel.BackgroundTransparency = 1
+    textLabel.Font = Enum.Font.SourceSansBold
+    textLabel.TextSize = 30
+    textLabel.RichText = true
+    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- Màu trắng
+
+    -- Nội dung text với 2 màu
+    textLabel.Text = '<font color="rgb(0,170,255)">Skull Hub</font> | <font color="rgb(0,255,255)">Click here</font> to copy the Discord link'
+
+    -- Thêm chức năng sao chép liên kết khi nhấp
+    textLabel.MouseButton1Click:Connect(function()
+        setclipboard("https://discord.gg/heSHddPs")
+        textLabel.Text = '<font color="rgb(0,255,0)">Copied!</font>'
+        wait(2)
+        textLabel.Text = '<font color="rgb(0,170,255)">Skull Hub</font> | <font color="rgb(0,255,255)">Click here</font> to copy the Discord link'
+    end)
+end
+
+-- Gọi hàm tạo text
+CreateText()
+
+---End
+
 --- FPS1: Optimize Performance Function
 function OptimizePerformance()
     if not getgenv().FixCrash then return end
