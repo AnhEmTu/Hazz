@@ -5,15 +5,6 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 -- Liên kết Discord
 setclipboard("https://discord.gg/heSHddPs")
 ---End
-local function OptimizeCharacter(character)
-        for _, obj in pairs(character:GetDescendants()) do
-            if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
-                obj.Transparency = 0.9
-            elseif obj:IsA("Accessory") then
-                obj:Destroy()
-            end
-        end
-    end
 -- FPS1: Hàm tối ưu hóa hiệu suất
 function OptimizePerformance()
     if not getgenv().FixCrash then return end
@@ -164,6 +155,121 @@ end
 -- Kích hoạt chức năng FPS booster
 FPSBooster()
 
+-- Tự động nhặt vật phẩm
+local function AutoCollect()
+    if not getgenv().VatPham then return end
+    print("Tự động nhặt vật phẩm đã bật!")
+
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    while wait(0.5) do
+        for _, item in pairs(workspace:GetDescendants()) do
+            if item:IsA("Tool") or item.Name == "CollectibleItem" then
+                if (character.HumanoidRootPart.Position - item.Position).Magnitude < 20 then
+                    firetouchinterest(character.HumanoidRootPart, item, 0)
+                    wait(0.1)
+                    firetouchinterest(character.HumanoidRootPart, item, 1)
+                end
+            end
+        end
+    end
+end
+
+-- Chống AFK
+local function AnTiAFK()
+    if not getgenv().AntiAFK then return end
+    print("Chức năng chống AFK đã bật!")
+
+    local vu = game:GetService("VirtualUser")
+    game.Players.LocalPlayer.Idled:Connect(function()
+        vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+        wait(1)
+        vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+        print("Đã ngăn việc ngắt kết nối do AFK.")
+    end)
+end
+
+-- Chế độ bảo vệ (Shield Mode)
+local function ShieldMode1()
+    if not getgenv().ShieldMode then return end
+    print("Chế độ bảo vệ đã bật!")
+
+    local player = game.Players.LocalPlayer
+    player.CharacterAdded:Connect(function(character)
+        character:WaitForChild("HumanoidRootPart").Anchored = true
+    end)
+end
+
+-- Kích hoạt các chức năng
+-- Chống Anti-cheat
+function AntiAntiCheat()
+    if not getgenv().AntiCheat then return end
+
+    -- Bảo vệ các hàm và thuộc tính quan trọng
+    local mt = getrawmetatable(game)
+    local oldNamecall = mt.__namecall
+    local oldIndex = mt.__index
+    setreadonly(mt, false)
+
+    -- Chặn các yêu cầu kiểm tra từ hệ thống
+    mt.__namecall = function(self, ...)
+        local args = {...}
+        local method = getnamecallmethod()
+
+        -- Vô hiệu hóa "kick" hoặc "ban"
+        if tostring(method) == "Kick" or tostring(method) == "Ban" then
+            return warn("[Anti-AntiCheat] Chặn lệnh Kick hoặc Ban từ hệ thống.")
+        end
+
+        -- Chặn kiểm tra thuộc tính hoặc script
+        if tostring(method) == "GetPropertyChangedSignal" and args[1] == "Humanoid" then
+            return nil
+        end
+
+        return oldNamecall(self, ...)
+    end
+
+    mt.__index = function(self, key)
+        -- Chặn truy cập vào các thuộc tính nhạy cảm
+        if tostring(key):lower():find("anticheat") or tostring(key):lower():find("kick") then
+            return nil
+        end
+
+        return oldIndex(self, key)
+    end
+
+    -- Chặn kiểm tra trong LocalPlayer
+    local player = game.Players.LocalPlayer
+    player.ChildAdded:Connect(function(child)
+        if child:IsA("Script") or child:IsA("LocalScript") then
+            if tostring(child.Name):lower():find("anticheat") then
+                child:Destroy()
+                warn("[Anti-AntiCheat] Đã phá hủy script Anti-cheat!")
+            end
+        end
+    end)
+
+    -- Bảo vệ nhân vật khỏi bị "Kill" bởi Anti-cheat
+    player.CharacterAdded:Connect(function(character)
+        character.DescendantAdded:Connect(function(descendant)
+            if descendant:IsA("Script") and tostring(descendant.Name):lower():find("anticheat") then
+                descendant:Destroy()
+                warn("[Anti-AntiCheat] Đã loại bỏ Anti-cheat trong nhân vật.")
+            end
+        end)
+    end)
+
+    print("[Anti-AntiCheat] Đã kích hoạt chức năng chống Anti-cheat.")
+end
+
+-- Bật chức năng Chống Anti-cheat
+AutoCollect()
+AnTiAFK()
+ShieldMode1()
+AntiAntiCheat()
+
+---End
 --- GUI Setup
 local main = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
