@@ -1,36 +1,11 @@
-repeat wait() until game:IsLoaded() and game.Players.LocalPlayer 
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 
+--- Team
 
----Team
-
-
-	
----Discord
-
+--- Discord
 setclipboard("https://discord.gg/heSHddPs")
 
----End
-
--- Gọi hàm chọn team
-
----_End
-   
- ---Xoá Xương
-
----End
-local main = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local up = Instance.new("TextButton")
-local down = Instance.new("TextButton")
-local onof = Instance.new("TextButton")
-local TextLabel = Instance.new("TextLabel")
-local plus = Instance.new("TextButton")
-local speed = Instance.new("TextLabel")
-local mine = Instance.new("TextButton")
-
-    
----FPS1
-
+--- FPS1
 -- Hàm giảm lag và tối ưu hóa hiệu suất
 function OptimizePerformance()
     if not getgenv().FixCrash then return end
@@ -68,41 +43,16 @@ function OptimizePerformance()
     -- Tăng SimulationRadius
     game:GetService("RunService").Stepped:Connect(function()
         sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-    end
--- Kích hoạt hàm tối ưu hóa
-OptimizePerformance()
----En1
-
----FPS2
--- Kích hoạt biến FixCrash2
-
-
--- Đợi game tải hoàn toàn
-repeat
-    wait()
-until game:IsLoaded()
-
--- Xác định thế giới (World1, World2, World3)
-local currentWorld = ""
-if game.PlaceId == 2753915549 then
-    currentWorld = "World1"
-elseif game.PlaceId == 4442272183 then
-    currentWorld = "World2"
-elseif game.PlaceId == 7449423635 then
-    currentWorld = "World3"
+    end)
 end
 
--- Gửi thông báo đến người chơi
-game:GetService("StarterGui"):SetCore("SendNotification", { 
-    Title = "Đang Tải Fix Lag | Booster",
-    Text = "Done Siêu Pro Fix Lag | Booster",
-    Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150",
-    Duration = 17
-})
+-- Kích hoạt hàm tối ưu hóa
+OptimizePerformance()
 
--- Hàm FPSBooster: Tối ưu hiệu suất
+--- FPS2
+-- Kích hoạt biến FixCrash2
 local function FPSBooster()
-    if not getgenv().FixCrash2 then return end -- Kiểm tra nếu FixCrash2 được bật
+    if not getgenv().FixCrash2 then return end
 
     local g = game
     local w = g.Workspace
@@ -157,9 +107,19 @@ end
 -- Kích hoạt hàm tối ưu hóa
 FPSBooster()
 
---Properties:
+--- GUI và các nút bấm
+local main = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local up = Instance.new("TextButton")
+local down = Instance.new("TextButton")
+local onof = Instance.new("TextButton")
+local TextLabel = Instance.new("TextLabel")
+local plus = Instance.new("TextButton")
+local speed = Instance.new("TextLabel")
+local mine = Instance.new("TextButton")
 
-main.Name = "TBoyRoblox "
+-- Cấu hình các đối tượng GUI
+main.Name = "TBoyRoblox"
 main.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
@@ -169,6 +129,7 @@ Frame.BorderColor3 = Color3.fromRGB(103, 221, 213)
 Frame.Position = UDim2.new(0.100320168, 0, 0.379746825, 0)
 Frame.Size = UDim2.new(0, 190, 0, 57)
 
+-- Các nút điều khiển
 up.Name = "lên"
 up.Parent = Frame
 up.BackgroundColor3 = Color3.fromRGB(79, 255, 152)
@@ -243,7 +204,6 @@ mine.Text = "-"
 mine.TextColor3 = Color3.fromRGB(0, 0, 0)
 mine.TextScaled = true
 mine.TextSize = 14.000
-mine.TextWrapped = true
 
 speeds = 1
 
