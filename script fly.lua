@@ -28,6 +28,11 @@ function OptimizePerformance()
     -- Giảm chất lượng đồ họa
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 
+    -- Giảm hoặc bỏ các hiệu ứng xương mù để "Nhìn xuyên xương mù"
+    lighting.FogColor = Color3.fromRGB(255, 255, 255)  -- Màu xương mù sáng
+    lighting.FogStart = 0  -- Bắt đầu xương mù từ gần camera
+    lighting.FogEnd = 500  -- Đặt độ xa của xương mù
+
     -- Tối ưu hóa nhân vật người chơi
     local function OptimizeCharacter(character)
         for _, obj in pairs(character:GetDescendants()) do
@@ -48,6 +53,13 @@ function OptimizePerformance()
     -- Đảm bảo tối ưu hóa vẫn được áp dụng khi nhân vật bị hạ gục và tái sinh
     player.CharacterAdded:Connect(function(character)
         OptimizeCharacter(character)
+        for _, obj in pairs(character:GetDescendants()) do
+            if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
+                obj.Transparency = 0.9
+            elseif obj:IsA("Accessory") then
+                obj:Destroy()
+            end
+        end
     end)
 
     -- Tăng SimulationRadius
