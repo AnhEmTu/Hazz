@@ -401,6 +401,7 @@ end)
 -----End
 
 -- FPS1: Hàm tối ưu hóa hiệu suất
+-- FPS1: Hàm tối ưu hóa hiệu suất
 function OptimizePerformance()
     if not getgenv().FixCrash then return end
 
@@ -418,179 +419,122 @@ function OptimizePerformance()
     lighting.GlobalShadows = false
     lighting.FogEnd = 9e9
     lighting.Brightness = 1
-    lighting.FogStart = 0
 
     -- Giảm chất lượng đồ họa
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 
-    -- Giảm hoặc bỏ các hiệu ứng xương mù để "Nhìn xuyên xương mù"
-    lighting.FogColor = Color3.fromRGB(255, 255, 255)  -- Màu xương mù sáng
-    lighting.FogStart = 0  -- Bắt đầu xương mù từ gần camera
-    lighting.FogEnd = 500  -- Đặt độ xa của xương mù
-
     -- Tối ưu hóa nhân vật người chơi
-    local function OptimizeCharacter(character)
-        for _, obj in pairs(character:GetDescendants()) do
-            if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
-                obj.Transparency = 0.9
-            elseif obj:IsA("Accessory") then
-                obj:Destroy()
-            end
-        end
-    end
-
-    -- Áp dụng tối ưu hóa nhân vật khi nhân vật người chơi được thêm vào
     local player = game.Players.LocalPlayer
-    if player and player.Character then
+    if player.Character then
         OptimizeCharacter(player.Character)
     end
-
-    -- Đảm bảo tối ưu hóa vẫn được áp dụng khi nhân vật bị hạ gục và tái sinh
     player.CharacterAdded:Connect(function(character)
         OptimizeCharacter(character)
     end)
 
     -- Tăng SimulationRadius
     game:GetService("RunService").Stepped:Connect(function()
-        if game.Players.LocalPlayer then
+        pcall(function()
             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-        end
-    end)
-
-    -- Tối ưu hóa quái vật và boss
-    local function OptimizeEnemy(enemy)
-        if enemy:IsA("Model") then
-            for _, obj in pairs(enemy:GetDescendants()) do
-                if obj:IsA("Part") or obj:IsA("MeshPart") then
-                    obj.Material = Enum.Material.Plastic
-                    obj.Reflectance = 0
-                elseif obj:IsA("ParticleEmitter") or obj:IsA("Trail") or obj:IsA("Smoke") or obj:IsA("Fire") or obj:IsA("Sparkles") then
-                    obj.Enabled = false
-                elseif obj:IsA("Decal") or obj:IsA("Texture") then
-                    obj.Transparency = 1
-                elseif obj:IsA("Accessory") then
-                    obj:Destroy()
-                end
-            end
-        end
-    end
-
-    -- Áp dụng tối ưu hóa cho tất cả quái vật và boss
-    for _, enemy in pairs(workspace:GetDescendants()) do
-        if enemy:IsA("Model") and (enemy:FindFirstChild("Humanoid") or enemy:FindFirstChild("Boss")) then
-            OptimizeEnemy(enemy)
-        end
-    end
-
-    -- Đảm bảo tối ưu hóa vẫn được áp dụng khi quái vật/boss được tạo ra mới
-    workspace.DescendantAdded:Connect(function(obj)
-        if obj:IsA("Model") and (obj:FindFirstChild("Humanoid") or obj:FindFirstChild("Boss")) then
-            OptimizeEnemy(obj)
-        end
+        end)
     end)
 end
 
--- Kích hoạt chức năng tối ưu hóa FPS
-OptimizePerformance()
-
--- FPS2: Tối ưu hóa thêm cho FPS
-local function FPSBooster()
-    if not getgenv().FixCrash2 then return end
-
-    local g = game
-    local w = g.Workspace
-    local l = g.Lighting
-    local t = w.Terrain
-    local decalsHidden = true
-
-    -- Tối ưu hóa Lighting và Terrain
-    sethiddenproperty(l, "Technology", Enum.Technology.Compatibility)
-    sethiddenproperty(t, "Decoration", false)
-    t.WaterWaveSize = 0
-    t.WaterWaveSpeed = 0
-    t.WaterReflectance = 0
-    t.WaterTransparency = 0
-    l.GlobalShadows = false
-    l.FogEnd = 9e9
-    l.Brightness = 0
-    settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
-
-    -- Tối ưu hóa các đối tượng trong game
-    for _, obj in pairs(g:GetDescendants()) do
-        if obj:IsA("Part") or obj:IsA("Union") or obj:IsA("CornerWedgePart") or obj:IsA("TrussPart") then
-            obj.Material = Enum.Material.Plastic
-            obj.Reflectance = 0
-        elseif obj:IsA("Decal") or obj:IsA("Texture") and decalsHidden then
-            obj.Transparency = 1
-        elseif obj:IsA("ParticleEmitter") or obj:IsA("Trail") then
-            obj.Lifetime = NumberRange.new(0)
-        elseif obj:IsA("Explosion") then
-            obj.BlastPressure = 1
-            obj.BlastRadius = 1
-        elseif obj:IsA("Fire") or obj:IsA("SpotLight") or obj:IsA("Smoke") or obj:IsA("Sparkles") then
-            obj.Enabled = false
-        elseif obj:IsA("MeshPart") then
-            obj.Material = Enum.Material.Plastic
-            obj.Reflectance = 0
+-- Tối ưu hóa nhân vật
+function OptimizeCharacter(character)
+    for _, obj in pairs(character:GetDescendants()) do
+        if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
+            obj.Transparency = 0.9
+        elseif obj:IsA("Accessory") then
+            obj:Destroy()
         end
     end
+end
 
-    -- Tắt các hiệu ứng ánh sáng
-    for _, effect in pairs(l:GetChildren()) do
+-- FPS2: Tối ưu hóa thêm cho FPS
+function FPSBooster()
+    if not getgenv().FixCrash2 then return end
+
+    -- Tối ưu hóa Lighting và Terrain
+    local lighting = game.Lighting
+    local terrain = workspace.Terrain
+    lighting.GlobalShadows = false
+    lighting.FogEnd = 9e9
+    lighting.Brightness = 0
+    terrain.WaterWaveSize = 0
+    terrain.WaterTransparency = 0
+    terrain.Decoration = false
+    settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+
+    -- Tắt hiệu ứng ánh sáng
+    for _, effect in pairs(lighting:GetChildren()) do
         if effect:IsA("BlurEffect") or effect:IsA("SunRaysEffect") or 
            effect:IsA("ColorCorrectionEffect") or effect:IsA("BloomEffect") or 
            effect:IsA("DepthOfFieldEffect") then
             effect.Enabled = false
         end
     end
-
-    print("FPS Booster đã được kích hoạt!")
 end
 
--- Kích hoạt chức năng FPS booster
-FPSBooster()
-
 -- Tự động nhặt vật phẩm
-local function AutoCollect()
+function AutoCollectItems()
     if not getgenv().VatPham then return end
-    print("Tự động nhặt vật phẩm đã bật!")
 
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
 
     while wait(0.5) do
         for _, item in pairs(workspace:GetDescendants()) do
-            if item:IsA("Tool") or item.Name == "CollectibleItem" then
-                if (character.HumanoidRootPart.Position - item.Position).Magnitude < 20 then
-                    firetouchinterest(character.HumanoidRootPart, item, 0)
-                    wait(0.1)
-                    firetouchinterest(character.HumanoidRootPart, item, 1)
-                end
+            if item:IsA("Tool") and (character.HumanoidRootPart.Position - item.Handle.Position).Magnitude < 20 then
+                firetouchinterest(character.HumanoidRootPart, item.Handle, 0)
+                wait(0.1)
+                firetouchinterest(character.HumanoidRootPart, item.Handle, 1)
             end
         end
     end
 end
-AutoCollect()
+
 -- Chống AFK
-local function AnTiAFK()
+function AnTiAFK()
     if not getgenv().AntiAFK then return end
-    print("Chức năng chống AFK đã bật!")
 
     local vu = game:GetService("VirtualUser")
     game.Players.LocalPlayer.Idled:Connect(function()
         vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
         wait(1)
         vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-        print("Đã ngăn việc ngắt kết nối do AFK.")
     end)
 end
 
-AnTiAFK()
----End
--- Chế độ bảo vệ (Shield Mode)
-local function ShieldMode1()
+-- Chống Anti-Cheat
+function AntiAntiCheat()
+    if not getgenv().AntiCheat then return end
+
+    local mt = getrawmetatable(game)
+    local oldNamecall = mt.__namecall
+    local oldIndex = mt.__index
+    setreadonly(mt, false)
+
+    mt.__namecall = function(self, ...)
+        local args = {...}
+        local method = getnamecallmethod()
+        if tostring(method) == "Kick" or tostring(method) == "Ban" then
+            return warn("Blocked Kick/Ban")
+        end
+        return oldNamecall(self, ...)
+    end
+
+    mt.__index = function(self, key)
+        if tostring(key):lower():find("anticheat") then
+            return nil
+        end
+        return oldIndex(self, key)
+    end
+end
+
+-- Shield Mode
+function ShieldMode()
     if not getgenv().ShieldMode then return end
-    print("Chế độ bảo vệ đã bật!")
 
     local player = game.Players.LocalPlayer
     player.CharacterAdded:Connect(function(character)
@@ -598,71 +542,10 @@ local function ShieldMode1()
     end)
 end
 
-
-ShieldMode1()
 -- Kích hoạt các chức năng
--- Chống Anti-cheat
-function AntiAntiCheat()
-    if not getgenv().AntiCheat then return end
-
-    -- Bảo vệ các hàm và thuộc tính quan trọng
-    local mt = getrawmetatable(game)
-    local oldNamecall = mt.__namecall
-    local oldIndex = mt.__index
-    setreadonly(mt, false)
-
-    -- Chặn các yêu cầu kiểm tra từ hệ thống
-    mt.__namecall = function(self, ...)
-        local args = {...}
-        local method = getnamecallmethod()
-
-        -- Vô hiệu hóa "kick" hoặc "ban"
-        if tostring(method) == "Kick" or tostring(method) == "Ban" then
-            return warn("[Anti-AntiCheat] Chặn lệnh Kick hoặc Ban từ hệ thống.")
-        end
-
-        -- Chặn kiểm tra thuộc tính hoặc script
-        if tostring(method) == "GetPropertyChangedSignal" and args[1] == "Humanoid" then
-            return nil
-        end
-
-        return oldNamecall(self, ...)
-    end
-
-    mt.__index = function(self, key)
-        -- Chặn truy cập vào các thuộc tính nhạy cảm
-        if tostring(key):lower():find("anticheat") or tostring(key):lower():find("kick") then
-            return nil
-        end
-
-        return oldIndex(self, key)
-    end
-
-    -- Chặn kiểm tra trong LocalPlayer
-    local player = game.Players.LocalPlayer
-    player.ChildAdded:Connect(function(child)
-        if child:IsA("Script") or child:IsA("LocalScript") then
-            if tostring(child.Name):lower():find("anticheat") then
-                child:Destroy()
-                warn("[Anti-AntiCheat] Đã phá hủy script Anti-cheat!")
-            end
-        end
-    end)
-
-    -- Bảo vệ nhân vật khỏi bị "Kill" bởi Anti-cheat
-    player.CharacterAdded:Connect(function(character)
-        character.DescendantAdded:Connect(function(descendant)
-            if descendant:IsA("Script") and tostring(descendant.Name):lower():find("anticheat") then
-                descendant:Destroy()
-                warn("[Anti-AntiCheat] Đã loại bỏ Anti-cheat trong nhân vật.")
-            end
-        end)
-    end)
-
-    print("[Anti-AntiCheat] Đã kích hoạt chức năng chống Anti-cheat.")
-end
-
--- Bật chức năng Chống Anti-cheat
+OptimizePerformance()
+FPSBooster()
+AutoCollectItems()
+AnTiAFK()
 AntiAntiCheat()
-
----End
+ShieldMode()
