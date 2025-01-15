@@ -68,11 +68,7 @@ function OptimizePerformance()
     -- Tăng SimulationRadius
     game:GetService("RunService").Stepped:Connect(function()
         sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-    end)
-
-    print("Script giảm lag và tối ưu hóa đã được kích hoạt.")
-end
-
+    end
 -- Kích hoạt hàm tối ưu hóa
 OptimizePerformance()
 ---En1
