@@ -903,3 +903,45 @@ end
 
 -- Kích hoạt AutoUseSkill
 AutoUseSkill()
+
+-- Thiết lập khoảng cách đánh xa
+-- Hàm kiểm tra và thực hiện đánh xa
+local function danhXa()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+    -- Kiểm tra khoảng cách và thực hiện đánh
+    if getgenv().DanhXaBat then  -- Chỉ thực hiện nếu chức năng đánh xa được bật
+        for _, enemy in pairs(workspace:GetChildren()) do
+            if enemy:FindFirstChild("HumanoidRootPart") and enemy ~= character then
+                local distance = (humanoidRootPart.Position - enemy.HumanoidRootPart.Position).Magnitude
+                if distance <= getgenv().KhoangCach then
+                    -- Thực hiện hành động đánh đối thủ
+                    -- Ví dụ gọi skill hoặc gây sát thương đối thủ
+                end
+            end
+        end
+    end
+end
+
+-- Hàm bật/tắt tính năng đánh xa
+local function toggleDanhXa()
+    getgenv().DanhXaBat = not getgenv().DanhXaBat  -- Đảo ngược trạng thái
+end
+
+-- Lắng nghe sự kiện nhấn phím để bật/tắt tính năng đánh xa
+game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent then return end  -- Tránh xử lý khi game đã xử lý sự kiện (như trong giao diện UI)
+    
+    -- Kiểm tra nếu nhấn phím "T" để bật/tắt tính năng đánh xa
+    if input.KeyCode == Enum.KeyCode.T then
+        toggleDanhXa()  -- Thực hiện bật/tắt tính năng đánh xa
+    end
+end)
+
+-- Gọi hàm đánh xa khi cần (ví dụ, tự động kiểm tra sau mỗi khoảng thời gian)
+while true do
+    wait(1)  -- Kiểm tra mỗi giây
+    danhXa()  -- Gọi hàm kiểm tra và thực hiện đánh xa
+end
