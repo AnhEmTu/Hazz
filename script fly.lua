@@ -1,10 +1,11 @@
+-- Chờ game và người chơi tải xong
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 
---- Team
--- Discord link
+-- Đoàn nhóm
+-- Liên kết Discord
 setclipboard("https://discord.gg/heSHddPs")
 
---- FPS1: Optimize Performance Function
+-- FPS1: Hàm tối ưu hóa hiệu suất
 function OptimizePerformance()
     if not getgenv().FixCrash then return end
 
@@ -22,11 +23,7 @@ function OptimizePerformance()
     lighting.GlobalShadows = false
     lighting.FogEnd = 9e9
     lighting.Brightness = 1
-    
-    ---Xoá Xương Mù
-    lighting.FogEnabled = false
     lighting.FogStart = 0
-    lighting.FogEnd = 9e9
 
     -- Giảm chất lượng đồ họa
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
@@ -55,7 +52,9 @@ function OptimizePerformance()
 
     -- Tăng SimulationRadius
     game:GetService("RunService").Stepped:Connect(function()
-        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+        if game.Players.LocalPlayer then
+            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+        end
     end)
 
     -- Tối ưu hóa quái vật và boss
@@ -94,7 +93,7 @@ end
 -- Kích hoạt chức năng tối ưu hóa FPS
 OptimizePerformance()
 
---- FPS2: Further Optimizations for FPS
+-- FPS2: Tối ưu hóa thêm cho FPS
 local function FPSBooster()
     if not getgenv().FixCrash2 then return end
 
@@ -104,7 +103,7 @@ local function FPSBooster()
     local t = w.Terrain
     local decalsHidden = true
 
-    -- Lighting and Terrain optimizations
+    -- Tối ưu hóa Lighting và Terrain
     sethiddenproperty(l, "Technology", Enum.Technology.Compatibility)
     sethiddenproperty(t, "Decoration", false)
     t.WaterWaveSize = 0
@@ -116,7 +115,7 @@ local function FPSBooster()
     l.Brightness = 0
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 
-    -- Optimize objects in the game
+    -- Tối ưu hóa các đối tượng trong game
     for _, obj in pairs(g:GetDescendants()) do
         if obj:IsA("Part") or obj:IsA("Union") or obj:IsA("CornerWedgePart") or obj:IsA("TrussPart") then
             obj.Material = Enum.Material.Plastic
@@ -136,7 +135,7 @@ local function FPSBooster()
         end
     end
 
-    -- Disable lighting effects
+    -- Tắt các hiệu ứng ánh sáng
     for _, effect in pairs(l:GetChildren()) do
         if effect:IsA("BlurEffect") or effect:IsA("SunRaysEffect") or 
            effect:IsA("ColorCorrectionEffect") or effect:IsA("BloomEffect") or 
@@ -145,10 +144,10 @@ local function FPSBooster()
         end
     end
 
-    print("FPS Booster activated!")
+    print("FPS Booster đã được kích hoạt!")
 end
 
--- Activate FPS booster function
+-- Kích hoạt chức năng FPS booster
 FPSBooster()
 
 --- GUI Setup
