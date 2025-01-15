@@ -23,6 +23,11 @@ function OptimizePerformance()
     lighting.FogEnd = 9e9
     lighting.Brightness = 1
 
+    -- Tắt xương mù (Fog)
+    lighting.FogEnabled = false
+    lighting.FogStart = 0
+    lighting.FogEnd = 9e9
+
     -- Giảm chất lượng đồ họa
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 
@@ -37,7 +42,7 @@ function OptimizePerformance()
         end
     end
 
-    -- Áp dụng tối ưu hóa nhân vật khi nhân vật người chơi được thêm vào
+    -- Áp dụng tối ưu hóa cho nhân vật người chơi khi nhân vật được thêm vào
     local player = game.Players.LocalPlayer
     if player and player.Character then
         OptimizeCharacter(player.Character)
@@ -71,19 +76,35 @@ function OptimizePerformance()
         end
     end
 
-    -- Áp dụng tối ưu hóa cho tất cả quái vật và boss
-    for _, enemy in pairs(workspace:GetDescendants()) do
-        if enemy:IsA("Model") and (enemy:FindFirstChild("Humanoid") or enemy:FindFirstChild("Boss")) then
-            OptimizeEnemy(enemy)
+    -- Tối ưu hóa quái vật thường và boss
+    local function OptimizeBossAndMonsters(enemy)
+        if enemy:IsA("Model") then
+            -- Kiểm tra nếu đối tượng có Humanoid, có thể là quái vật hoặc boss
+            if enemy:FindFirstChild("Humanoid") then
+                -- Kiểm tra nếu là boss, nếu có thể phân biệt qua tên hoặc thuộc tính
+                if enemy:FindFirstChild("Boss") then
+                    -- Tối ưu hóa boss
+                    print("Optimizing Boss")
+                    OptimizeEnemy(enemy)
+                else
+                    -- Tối ưu hóa quái vật thường
+                    print("Optimizing Regular Monster")
+                    OptimizeEnemy(enemy)
+                end
+            end
         end
     end
 
-    -- Đảm bảo tối ưu hóa vẫn được áp dụng khi quái vật/boss được tạo ra mới
+    -- Áp dụng tối ưu hóa cho tất cả quái vật và boss trong game
+    for _, enemy in pairs(workspace:GetDescendants()) do
+        OptimizeBossAndMonsters(enemy)
+    end
+
+    -- Đảm bảo tối ưu hóa quái vật và boss mới xuất hiện
     workspace.DescendantAdded:Connect(function(obj)
-        if obj:IsA("Model") and (obj:FindFirstChild("Humanoid") or obj:FindFirstChild("Boss")) then
-            OptimizeEnemy(obj)
-        end
+        OptimizeBossAndMonsters(obj)
     end)
+
 end
 
 -- Kích hoạt chức năng tối ưu hóa FPS
@@ -145,7 +166,30 @@ end
 
 -- Activate FPS booster function
 FPSBooster()
+ 
+ -----Chạy Nhanh
+ -- Chức năng chạy nhanh
+function UpdateRunFast()
+    local player = game.Players.LocalPlayer
+    if player and player.Character then
+        local humanoid = player.Character:FindFirstChild("Humanoid")
+        if humanoid then
+            -- Kiểm tra nếu tính năng chạy nhanh được bật
+            if getgenv().RunFast then
+                humanoid.WalkSpeed = 300  -- Tăng tốc độ di chuyển khi bật
+            else
+                humanoid.WalkSpeed = 16   -- Tốc độ mặc định khi tắt
+            end
+        end
+    end
+end
 
+-- Kiểm tra và kích hoạt chức năng chạy nhanh mỗi khi trạng thái RunFast thay đổi
+game:GetService("RunService").Heartbeat:Connect(function()
+    UpdateRunFast()
+end)
+
+----End
 --- GUI Setup
 local main = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
