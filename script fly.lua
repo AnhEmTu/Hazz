@@ -17,23 +17,31 @@ setclipboard("https://discord.gg/heSHddPs")
 
 
 ---Xoá Thông Báo
-local function ToggleRemoveNotify()
-ToggleRemoveNotify:OnChanged(function(Value)
-    RemoveNotify = Value
-    end)
-    Options.ToggleRemoveNotify:SetValue(false)
+-- Hàm để bật/tắt thông báo
+function SetThongBao(state)
+    getgenv().Thông_báo = state  -- Thiết lập trạng thái thông báo
 
-    spawn(function()
-        while wait() do
-            if RemoveNotify then
-                game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = false
-            else
-                game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = true
+    if getgenv().Thông_báo then
+        print("Thông báo đã được bật.")
+    else
+        print("Thông báo đã bị tắt.")
+        -- Xóa thông báo nếu trạng thái là false
+        for _, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
+            if v.Name == "NotificationGui" then
+                v:Destroy()
             end
         end
-    end)
-   
- ToggleRemoveNotify()
+    end
+end
+
+-- Kiểm tra và thực thi trạng thái của thông báo từ bên ngoài script
+while true do
+    wait(1)  -- Chờ một chút để giảm tải cho hệ thống
+    if getgenv().Thông_báo ~= nil then
+        -- Thực hiện bật hoặc tắt thông báo dựa trên giá trị của getgenv().Thông_báo
+        SetThongBao(getgenv().Thông_báo)
+    end
+end
    ---End
    
  ---Xoá Xương
