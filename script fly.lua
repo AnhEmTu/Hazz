@@ -175,7 +175,7 @@ local function AutoCollect()
         end
     end
 end
-
+AutoCollect()
 -- Chống AFK
 local function AnTiAFK()
     if not getgenv().AntiAFK then return end
@@ -190,6 +190,8 @@ local function AnTiAFK()
     end)
 end
 
+AnTiAFK()
+---End
 -- Chế độ bảo vệ (Shield Mode)
 local function ShieldMode1()
     if not getgenv().ShieldMode then return end
@@ -201,6 +203,8 @@ local function ShieldMode1()
     end)
 end
 
+
+ShieldMode1()
 -- Kích hoạt các chức năng
 -- Chống Anti-cheat
 function AntiAntiCheat()
@@ -264,9 +268,6 @@ function AntiAntiCheat()
 end
 
 -- Bật chức năng Chống Anti-cheat
-AutoCollect()
-AnTiAFK()
-ShieldMode1()
 AntiAntiCheat()
 
 ---End
