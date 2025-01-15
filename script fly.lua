@@ -1,46 +1,13 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 
--- Discord link
 setclipboard("https://discord.gg/heSHddPs")
-
-----End
-
----Chữ 2 màu
--- Hiển thị chữ 2 màu
-local function CreateText()
-    if getgenv().HideText then return end -- Nếu HideText = true thì ẩn text
-
-    local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-    local screenGui = Instance.new("ScreenGui", playerGui)
-    screenGui.Name = "TextDisplay"
-
-    local textLabel = Instance.new("TextLabel", screenGui)
-    textLabel.Size = UDim2.new(0, 400, 0, 50)
-    textLabel.Position = UDim2.new(0.5, -200, 0.1, 0) -- Canh giữa màn hình
-    textLabel.BackgroundTransparency = 1
-    textLabel.Font = Enum.Font.SourceSansBold
-    textLabel.TextSize = 30
-    textLabel.RichText = true
-    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- Màu trắng
-
-    -- Nội dung text với 2 màu
-    textLabel.Text = '<font color="rgb(0,170,255)">Skull Hub</font> | <font color="rgb(0,255,255)">Click here</font> to copy the Discord link'
-
-    -- Thêm chức năng sao chép liên kết khi nhấp
-    textLabel.MouseButton1Click:Connect(function()
-        setclipboard("https://discord.gg/heSHddPs")
-        textLabel.Text = '<font color="rgb(0,255,0)">Copied!</font>'
-        wait(2)
-        textLabel.Text = '<font color="rgb(0,170,255)">Skull Hub</font> | <font color="rgb(0,255,255)">Click here</font> to copy the Discord link'
-    end)
-end
-
--- Gọi hàm tạo text
-CreateText()
 
 ---End
 
 --- FPS1: Optimize Performance Function
+-- Cài đặt biến toàn cục (đảm bảo chúng có giá trị mặc định)
+
+-- Hàm tối ưu hóa hiệu suất
 function OptimizePerformance()
     if not getgenv().FixCrash then return end
 
@@ -58,8 +25,6 @@ function OptimizePerformance()
     lighting.GlobalShadows = false
     lighting.FogEnd = 9e9
     lighting.Brightness = 1
-
-    -- Tắt xương mù (Fog)
     lighting.FogEnabled = false
     lighting.FogStart = 0
     lighting.FogEnd = 9e9
@@ -92,7 +57,12 @@ function OptimizePerformance()
     -- Tăng SimulationRadius
     game:GetService("RunService").Stepped:Connect(function()
         pcall(function()
-            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+            local success, errorMessage = pcall(function()
+                game.Players.LocalPlayer.Character.Humanoid.SimulationRadius = math.huge
+            end)
+            if not success then
+                warn("Error setting SimulationRadius: " .. errorMessage)
+            end
         end)
     end)
 
@@ -128,7 +98,7 @@ end
 -- Kích hoạt chức năng tối ưu hóa FPS
 OptimizePerformance()
 
---- FPS2: Further Optimizations for FPS
+-- FPS Booster: Tối ưu hóa FPS thêm
 local function FPSBooster()
     if not getgenv().FixCrash2 then return end
 
@@ -136,11 +106,12 @@ local function FPSBooster()
     local w = g.Workspace
     local l = g.Lighting
     local t = w.Terrain
-    local decalsHidden = true
 
     -- Lighting and Terrain optimizations
     pcall(function()
-        sethiddenproperty(l, "Technology", Enum.Technology.Compatibility)
+        if l then
+            l.Technology = Enum.Technology.Compatibility
+        end
     end)
     t.WaterWaveSize = 0
     t.WaterWaveSpeed = 0
@@ -151,12 +122,12 @@ local function FPSBooster()
     l.Brightness = 0
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 
-    -- Optimize objects in the game
+    -- Tối ưu hóa các đối tượng trong game
     for _, obj in pairs(g:GetDescendants()) do
         if obj:IsA("Part") or obj:IsA("Union") or obj:IsA("CornerWedgePart") or obj:IsA("TrussPart") then
             obj.Material = Enum.Material.Plastic
             obj.Reflectance = 0
-        elseif obj:IsA("Decal") or obj:IsA("Texture") and decalsHidden then
+        elseif obj:IsA("Decal") or obj:IsA("Texture") then
             obj.Transparency = 1
         elseif obj:IsA("ParticleEmitter") or obj:IsA("Trail") then
             obj.Lifetime = NumberRange.new(0)
@@ -171,7 +142,7 @@ local function FPSBooster()
         end
     end
 
-    -- Disable lighting effects
+    -- Tắt các hiệu ứng Lighting không cần thiết
     for _, effect in pairs(l:GetChildren()) do
         if effect:IsA("BlurEffect") or effect:IsA("SunRaysEffect") or 
            effect:IsA("ColorCorrectionEffect") or effect:IsA("BloomEffect") or 
@@ -183,29 +154,28 @@ local function FPSBooster()
     print("FPS Booster activated!")
 end
 
--- Activate FPS booster function
+-- Kích hoạt FPS booster
 FPSBooster()
 
---- Chạy nhanh: Tăng tốc độ di chuyển
+-- Cập nhật tốc độ chạy của nhân vật
+local currentSpeed = 16
 function UpdateRunFast()
     local player = game.Players.LocalPlayer
-    if player and player.Character then
-        local humanoid = player.Character:FindFirstChild("Humanoid")
-        if humanoid then
-            if getgenv().RunFast then
-                humanoid.WalkSpeed = getgenv().Speed or 100  -- Sử dụng giá trị Speed nếu có
-            else
-                humanoid.WalkSpeed = 16
-            end
+    if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+        local humanoid = player.Character.Humanoid
+        local targetSpeed = getgenv().RunFast and (getgenv().Speed or 100) or 16
+        if targetSpeed ~= currentSpeed then
+            humanoid.WalkSpeed = targetSpeed
+            currentSpeed = targetSpeed
         end
     end
 end
 
--- Cập nhật tốc độ di chuyển liên tục
 game:GetService("RunService").Heartbeat:Connect(function()
     pcall(UpdateRunFast)
 end)
 
+print("Script loaded successfully!")
 ----End
 --- GUI Setup
 local main = Instance.new("ScreenGui")
