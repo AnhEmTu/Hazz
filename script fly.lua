@@ -45,18 +45,6 @@ end
 chooseTeam()
 
 -- Gọi hàm chọn team
-selectTeam()
-task.spawn(function()
-  while getgenv().SetTeam do task.wait()
-function()
-  FireRemote("SetTeam", "Marines")
-end})
-
-task.spawn(function()
-  while getgenv().AutoStoreFruits do task.wait()
-function()
-  FireRemote("SetTeam", "Marines")
-end})
 
 ---_End
 
