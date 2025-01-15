@@ -4,7 +4,16 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 -- Đoàn nhóm
 -- Liên kết Discord
 setclipboard("https://discord.gg/heSHddPs")
-
+---End
+local function OptimizeCharacter(character)
+        for _, obj in pairs(character:GetDescendants()) do
+            if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
+                obj.Transparency = 0.9
+            elseif obj:IsA("Accessory") then
+                obj:Destroy()
+            end
+        end
+    end
 -- FPS1: Hàm tối ưu hóa hiệu suất
 function OptimizePerformance()
     if not getgenv().FixCrash then return end
@@ -53,13 +62,6 @@ function OptimizePerformance()
     -- Đảm bảo tối ưu hóa vẫn được áp dụng khi nhân vật bị hạ gục và tái sinh
     player.CharacterAdded:Connect(function(character)
         OptimizeCharacter(character)
-        for _, obj in pairs(character:GetDescendants()) do
-            if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
-                obj.Transparency = 0.9
-            elseif obj:IsA("Accessory") then
-                obj:Destroy()
-            end
-        end
     end)
 
     -- Tăng SimulationRadius
