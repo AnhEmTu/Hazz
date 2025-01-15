@@ -1,10 +1,49 @@
 -- Chờ game và người chơi tải xong
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+----End
+---Team
 
+-- Chức năng tự động chọn team trong Block Fruit
+local function AutoSelectBlockFruitTeam()
+    if not getgenv().Team then 
+        warn("Chưa chọn team!") 
+        return 
+    end  -- Kiểm tra xem có chọn team hay không
+
+    -- Kiểm tra và chọn team nếu có giá trị cho Team
+    local teamName = getgenv().Team  -- Lấy tên team từ getgenv().Team
+    local validTeams = {"Marines", "Pirates"}  -- Các team hợp lệ
+
+    if table.find(validTeams, teamName) then
+        -- Chọn team hợp lệ
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", teamName)
+        print("Đã chọn team: " .. teamName)
+    else
+        warn("Team không hợp lệ: " .. teamName)
+    end
+end
+
+AutoSelectBlockFruitTeam()  -- Gọi hàm để thực hiện chọn team
+---End
+
+---Tối ưu nhân vật 
+    local function NhanVat(character)
+        for _, obj in pairs(character:GetDescendants()) do
+            if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
+                obj.Transparency = 0.9
+            elseif obj:IsA("Accessory") then
+                obj:Destroy()
+            end
+        end
+    end
+    NhanVat()
+    ---End
+    
 -- Đoàn nhóm
 -- Liên kết Discord
 setclipboard("https://discord.gg/heSHddPs")
 ---End
+
 --- GUI Setup
 local main = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
