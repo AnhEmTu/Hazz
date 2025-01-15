@@ -906,6 +906,7 @@ AutoUseSkill()
 
 -- Thiết lập khoảng cách đánh xa
 -- Hàm kiểm tra và thực hiện đánh xa
+-- Hàm kiểm tra và thực hiện đánh xa
 local function danhXa()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
@@ -914,11 +915,10 @@ local function danhXa()
     -- Kiểm tra khoảng cách và thực hiện đánh
     if getgenv().DanhXaBat then  -- Chỉ thực hiện nếu chức năng đánh xa được bật
         for _, enemy in pairs(workspace:GetChildren()) do
-            if enemy:FindFirstChild("HumanoidRootPart") and enemy ~= character then
+            if enemy:FindFirstChild("HumanoidRootPart") and enemy ~= character and enemy:FindFirstChildOfClass("Humanoid") then
                 local distance = (humanoidRootPart.Position - enemy.HumanoidRootPart.Position).Magnitude
                 if distance <= getgenv().KhoangCach then
                     -- Thực hiện hành động đánh đối thủ
-                    -- Ví dụ gọi skill hoặc gây sát thương đối thủ
                 end
             end
         end
@@ -928,6 +928,7 @@ end
 -- Hàm bật/tắt tính năng đánh xa
 local function toggleDanhXa()
     getgenv().DanhXaBat = not getgenv().DanhXaBat  -- Đảo ngược trạng thái
+    print("DanhXaBat hiện tại:", getgenv().DanhXaBat)  -- Thêm thông báo để kiểm tra
 end
 
 -- Lắng nghe sự kiện nhấn phím để bật/tắt tính năng đánh xa
@@ -940,8 +941,8 @@ game:GetService("UserInputService").InputBegan:Connect(function(input, gameProce
     end
 end)
 
--- Gọi hàm đánh xa khi cần (ví dụ, tự động kiểm tra sau mỗi khoảng thời gian)
-while true do
-    wait(1)  -- Kiểm tra mỗi giây
+-- Kiểm tra và thực hiện đánh xa mỗi lần "heartbeat"
+local RunService = game:GetService("RunService")
+RunService.Heartbeat:Connect(function()
     danhXa()  -- Gọi hàm kiểm tra và thực hiện đánh xa
-end
+end)
