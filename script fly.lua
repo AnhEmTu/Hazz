@@ -14,7 +14,7 @@ setclipboard("https://discord.gg/heSHddPs")
 -- Bạn có thể thay "Pirates" thành "Marines" nếu muốn chọn Marines
 
 
--local function chooseTeam()
+local function chooseTeam()
     -- Kiểm tra dịch vụ cần thiết
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local Players = game:GetService("Players")
