@@ -16,26 +16,6 @@ setclipboard("https://discord.gg/heSHddPs")
 ---_End
    
  ---Xoá Xương
- -- Lấy dịch vụ Lighting (Ánh sáng) trong Roblox
--- Lấy dịch vụ Lighting trong Roblox
-local Lighting = game:GetService("Lighting")
-
--- Định nghĩa chức năng để xóa xương mù
-local function xoaXuongMu()
-    Lighting.FogStart = 1000000  -- Đặt FogStart rất cao để xương mù không xuất hiện gần người chơi
-    Lighting.FogEnd = 1000000    -- Đặt FogEnd cũng rất cao để xương mù không ảnh hưởng xa
-    Lighting.FogColor = Color3.fromRGB(255, 255, 255) -- Màu sắc của xương mù (có thể chỉnh theo ý muốn)
-end
-
--- Xóa xương mù ngay khi game bắt đầu
-xoaXuongMu()
-
--- Gọi chức năng xóa xương mù khi người chơi nhấn phím "F"
-game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
-    if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode.F then
-        xoaXuongMu()  -- Gọi hàm khi người chơi nhấn phím "F"
-    end
-end)
 
 ---End
 local main = Instance.new("ScreenGui")
