@@ -446,30 +446,29 @@ function OptimizePerformance()
     -- Giảm chất lượng đồ họa
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 
--- Tối ưu hóa nhân vật người chơi
--- Tối ưu hóa nhân vật
-local function OptimizeCharacter(character)
-    -- Duyệt qua tất cả các đối tượng trong nhân vật
-    for _, obj in pairs(character:GetDescendants()) do
-        -- Xử lý các đối tượng Decal và Texture
-        if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
-            obj.Transparency = 0.9  -- Đặt độ trong suốt cao
-        elseif obj:IsA("Accessory") then
-            obj:Destroy()  -- Xóa phụ kiện không cần thiết
+    -- Tối ưu hóa nhân vật người chơi
+    local function OptimizeCharacter(character)
+        -- Duyệt qua tất cả các đối tượng trong nhân vật
+        for _, obj in pairs(character:GetDescendants()) do
+            -- Xử lý các đối tượng Decal và Texture
+            if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
+                obj.Transparency = 0.9  -- Đặt độ trong suốt cao
+            elseif obj:IsA("Accessory") then
+                obj:Destroy()  -- Xóa phụ kiện không cần thiết
+            end
         end
     end
-end
 
--- Áp dụng tối ưu hóa nhân vật khi nhân vật được thêm vào
-local player = game.Players.LocalPlayer
-if player and player.Character then
-    OptimizeCharacter(player.Character)
-end
+    -- Áp dụng tối ưu hóa nhân vật khi nhân vật được thêm vào
+    local player = game.Players.LocalPlayer
+    if player and player.Character then
+        OptimizeCharacter(player.Character)
+    end
 
--- Đảm bảo tối ưu hóa vẫn được áp dụng khi nhân vật bị hạ gục và tái sinh
-player.CharacterAdded:Connect(function(character)
-    OptimizeCharacter(character)
-end)
+    -- Đảm bảo tối ưu hóa vẫn được áp dụng khi nhân vật bị hạ gục và tái sinh
+    player.CharacterAdded:Connect(function(character)
+        OptimizeCharacter(character)
+    end)
 
     -- Tăng SimulationRadius
     game:GetService("RunService").Stepped:Connect(function()
@@ -676,3 +675,74 @@ end
 
 -- Kích hoạt chống Anti-Cheat
 AntiAntiCheat()
+
+-- Chức năng thông minh
+
+-- Tự động hồi phục
+local function AutoHeal()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    while wait(0.5) do
+        if character:FindFirstChild("Humanoid") then
+            local humanoid = character.Humanoid
+            if humanoid.Health < humanoid.MaxHealth * 0.3 then
+                -- Tự động sử dụng thuốc hồi phục hoặc khả năng hồi phục
+                -- (Thực hiện hành động phù hợp tại đây)
+                print("Health is low, healing...")
+            end
+        end
+    end
+end
+
+AutoHeal()
+
+-- Cảnh báo tài nguyên hệ thống
+local function MonitorResourceUsage()
+    while wait(1) do
+        local cpuUsage = game:GetService("Stats").MemoryUsage
+        if cpuUsage > 80 then
+            warn("CPU usage is high, consider lowering graphics settings!")
+        end
+    end
+end
+
+MonitorResourceUsage()
+
+-- Tự động nâng cấp kỹ năng
+local function AutoSkillUpgrade()
+    local player = game.Players.LocalPlayer
+    while wait(5) do
+        if player:FindFirstChild("Skills") then
+            local skills = player.Skills:GetChildren()
+            for _, skill in pairs(skills) do
+                if skill.Level < skill.MaxLevel then
+                    -- Tự động sử dụng điểm kỹ năng hoặc nâng cấp kỹ năng
+                    skill.Level = skill.Level + 1
+                    print("Skill upgraded: " .. skill.Name)
+                end
+            end
+        end
+    end
+end
+
+AutoSkillUpgrade()
+
+-- Chế độ tự động tương tác
+local function AutoInteract()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    while wait(0.5) do
+        for _, obj in pairs(workspace:GetDescendants()) do
+            if obj:IsA("ProximityPrompt") then
+                if (character.HumanoidRootPart.Position - obj.Position).Magnitude < 5 then
+                    fireproximityprompt(obj)
+                    print("Interacting with: " .. obj.Name)
+                end
+            end
+        end
+    end
+end
+
+AutoInteract()
