@@ -1,13 +1,10 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 
+--- Team
+-- Discord link
 setclipboard("https://discord.gg/heSHddPs")
 
----End
-
 --- FPS1: Optimize Performance Function
--- Cài đặt biến toàn cục (đảm bảo chúng có giá trị mặc định)
-
--- Hàm tối ưu hóa hiệu suất
 function OptimizePerformance()
     if not getgenv().FixCrash then return end
 
@@ -25,6 +22,8 @@ function OptimizePerformance()
     lighting.GlobalShadows = false
     lighting.FogEnd = 9e9
     lighting.Brightness = 1
+    
+    ---Xoá Xương Mù
     lighting.FogEnabled = false
     lighting.FogStart = 0
     lighting.FogEnd = 9e9
@@ -43,7 +42,7 @@ function OptimizePerformance()
         end
     end
 
-    -- Áp dụng tối ưu hóa cho nhân vật người chơi khi nhân vật được thêm vào
+    -- Áp dụng tối ưu hóa nhân vật khi nhân vật người chơi được thêm vào
     local player = game.Players.LocalPlayer
     if player and player.Character then
         OptimizeCharacter(player.Character)
@@ -56,14 +55,7 @@ function OptimizePerformance()
 
     -- Tăng SimulationRadius
     game:GetService("RunService").Stepped:Connect(function()
-        pcall(function()
-            local success, errorMessage = pcall(function()
-                game.Players.LocalPlayer.Character.Humanoid.SimulationRadius = math.huge
-            end)
-            if not success then
-                warn("Error setting SimulationRadius: " .. errorMessage)
-            end
-        end)
+        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
     end)
 
     -- Tối ưu hóa quái vật và boss
@@ -84,21 +76,25 @@ function OptimizePerformance()
         end
     end
 
-    -- Áp dụng tối ưu hóa cho tất cả quái vật và boss trong game
+    -- Áp dụng tối ưu hóa cho tất cả quái vật và boss
     for _, enemy in pairs(workspace:GetDescendants()) do
-        OptimizeEnemy(enemy)
+        if enemy:IsA("Model") and (enemy:FindFirstChild("Humanoid") or enemy:FindFirstChild("Boss")) then
+            OptimizeEnemy(enemy)
+        end
     end
 
-    -- Đảm bảo tối ưu hóa quái vật và boss mới xuất hiện
+    -- Đảm bảo tối ưu hóa vẫn được áp dụng khi quái vật/boss được tạo ra mới
     workspace.DescendantAdded:Connect(function(obj)
-        OptimizeEnemy(obj)
+        if obj:IsA("Model") and (obj:FindFirstChild("Humanoid") or obj:FindFirstChild("Boss")) then
+            OptimizeEnemy(obj)
+        end
     end)
 end
 
 -- Kích hoạt chức năng tối ưu hóa FPS
 OptimizePerformance()
 
--- FPS Booster: Tối ưu hóa FPS thêm
+--- FPS2: Further Optimizations for FPS
 local function FPSBooster()
     if not getgenv().FixCrash2 then return end
 
@@ -106,13 +102,11 @@ local function FPSBooster()
     local w = g.Workspace
     local l = g.Lighting
     local t = w.Terrain
+    local decalsHidden = true
 
     -- Lighting and Terrain optimizations
-    pcall(function()
-        if l then
-            l.Technology = Enum.Technology.Compatibility
-        end
-    end)
+    sethiddenproperty(l, "Technology", Enum.Technology.Compatibility)
+    sethiddenproperty(t, "Decoration", false)
     t.WaterWaveSize = 0
     t.WaterWaveSpeed = 0
     t.WaterReflectance = 0
@@ -122,12 +116,12 @@ local function FPSBooster()
     l.Brightness = 0
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 
-    -- Tối ưu hóa các đối tượng trong game
+    -- Optimize objects in the game
     for _, obj in pairs(g:GetDescendants()) do
         if obj:IsA("Part") or obj:IsA("Union") or obj:IsA("CornerWedgePart") or obj:IsA("TrussPart") then
             obj.Material = Enum.Material.Plastic
             obj.Reflectance = 0
-        elseif obj:IsA("Decal") or obj:IsA("Texture") then
+        elseif obj:IsA("Decal") or obj:IsA("Texture") and decalsHidden then
             obj.Transparency = 1
         elseif obj:IsA("ParticleEmitter") or obj:IsA("Trail") then
             obj.Lifetime = NumberRange.new(0)
@@ -142,7 +136,7 @@ local function FPSBooster()
         end
     end
 
-    -- Tắt các hiệu ứng Lighting không cần thiết
+    -- Disable lighting effects
     for _, effect in pairs(l:GetChildren()) do
         if effect:IsA("BlurEffect") or effect:IsA("SunRaysEffect") or 
            effect:IsA("ColorCorrectionEffect") or effect:IsA("BloomEffect") or 
@@ -154,29 +148,9 @@ local function FPSBooster()
     print("FPS Booster activated!")
 end
 
--- Kích hoạt FPS booster
+-- Activate FPS booster function
 FPSBooster()
 
--- Cập nhật tốc độ chạy của nhân vật
-local currentSpeed = 16
-function UpdateRunFast()
-    local player = game.Players.LocalPlayer
-    if player and player.Character and player.Character:FindFirstChild("Humanoid") then
-        local humanoid = player.Character.Humanoid
-        local targetSpeed = getgenv().RunFast and (getgenv().Speed or 100) or 16
-        if targetSpeed ~= currentSpeed then
-            humanoid.WalkSpeed = targetSpeed
-            currentSpeed = targetSpeed
-        end
-    end
-end
-
-game:GetService("RunService").Heartbeat:Connect(function()
-    pcall(UpdateRunFast)
-end)
-
-print("Script loaded successfully!")
-----End
 --- GUI Setup
 local main = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
