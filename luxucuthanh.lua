@@ -2597,17 +2597,11 @@ local Mastery = Tabs.Main:AddSection("Mastery Farm")
         TypeMastery = Value
     end)
 
-    local ToggleMasteryFruit = Tabs.Main:AddToggle("ToggleMasteryFruit", {Title = "Cày Thông Thạo Trái", Default = false })
+    local ToggleMasteryFruit = Tabs.Main:AddToggle("ToggleMasteryFruit", {Title = "Auto BF Mastery", Default = false })
     ToggleMasteryFruit:OnChanged(function(Value)
         AutoFarmMasDevilFruit = Value
     end)
     Options.ToggleMasteryFruit:SetValue(false)
-
-    local ToggleMasteryGun = Tabs.Main:AddToggle("ToggleMasteryGun", {Title = "Cày Thông Thạo Súng", Default = false })
-    ToggleMasteryGun:OnChanged(function(Value)
-        AutoFarmMasGun = Value
-    end)
-    Options.ToggleMasteryGun:SetValue(false)
 
  
 
