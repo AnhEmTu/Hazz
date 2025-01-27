@@ -4561,7 +4561,23 @@ SelectedPly:OnChanged(function(Value)
     _G.SelectPly = Value
 end)
 
+local ToggleEnablePvp = Tabs.Player:AddToggle("ToggleEnablePvp", {Title = "Tự động bật PVP", Description = "",Default = false })
+ToggleEnablePvp:OnChanged(function(Value)
+  _G.EnabledPvP = Value
+end)
+Options.ToggleEnablePvp:SetValue(false)
 
+spawn(function()
+  pcall(function()
+      while wait() do
+          if _G.EnabledPvP then
+              if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
+                  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
+              end
+          end
+      end
+  end)
+end)
 
 local ToggleTeleport = Tabs.Player:AddToggle("ToggleTeleport", {Title = "Bay Đến Người Chơi", Default = false })
 ToggleTeleport:OnChanged(function(Value)
@@ -4796,7 +4812,7 @@ DropdownIsland:OnChanged(function(Value)
 end)
 
 
-local ToggleIsland = Tabs.Teleport:AddToggle("ToggleIsland", {Title = "Teleport", Default = false })
+local ToggleIsland = Tabs.Teleport:AddToggle("ToggleIsland", {Title = "Chọn Đảo", Default = false })
 ToggleIsland:OnChanged(function(Value)
     _G.TeleportIsland = Value
     if _G.TeleportIsland == true then
@@ -4807,7 +4823,7 @@ ToggleIsland:OnChanged(function(Value)
                 toTarget(CFrame.new(-2566.4296875, 6.8556680679321, 2045.2561035156))
             elseif _G.SelectIsland == "Middle Town" then
                 toTarget(CFrame.new(-690.33081054688, 15.09425163269, 1582.2380371094))
-            elseif _G.SelectIsland == "Jungle" then
+            elseif _G.SelectIsland == "Rừng" then
                 toTarget(CFrame.new(-1612.7957763672, 36.852081298828, 149.12843322754))
             elseif _G.SelectIsland == "Pirate Village" then
                 toTarget(CFrame.new(-1181.3093261719, 4.7514905929565, 3803.5456542969))
@@ -5839,7 +5855,7 @@ spawn(function()
 
 
 Tabs.Shop:AddButton({
-	Title = "Geppo",
+	Title = "Mua Nhảy Liên Tục",
 	Description = "",
 	Callback = function()
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Geppo")
@@ -5849,7 +5865,7 @@ Tabs.Shop:AddButton({
 
 
 Tabs.Shop:AddButton({
-	Title = "Buso Haki",
+	Title = "Mua Haki Toàn Thân",
 	Description = "",
 	Callback = function()
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Buso")
@@ -5860,7 +5876,7 @@ Tabs.Shop:AddButton({
 
 
 Tabs.Shop:AddButton({
-	Title = "Soru",
+	Title = "Mua Dịch Chuyển Tức Thì",
 	Description = "",
 	Callback = function()
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Soru")
@@ -5869,7 +5885,7 @@ Tabs.Shop:AddButton({
 
 
 Tabs.Shop:AddButton({
-	Title = "Ken Haki",
+	Title = "Mua Haki Quan Sát",
 	Description = "",
 	Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk","Buy")
