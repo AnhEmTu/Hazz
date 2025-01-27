@@ -2700,7 +2700,13 @@ _G.FastAttack = true
         end
         end)
 
-local Mastery = Tabs.Main:AddSection("Mastery Farm")
+
+--Mastery
+    Tabs.Main:AddParagraph({
+        Title = "Cày Thông Thạo",
+        Content = "Auto farm your mastery"
+    })
+
     local DropdownMastery = Tabs.Main:AddDropdown("DropdownMastery", {
         Title = "Chọn Chế Độ Cày Thông Thạo",
         Values = {"Level","Near Mobs",},
@@ -2719,6 +2725,12 @@ local Mastery = Tabs.Main:AddSection("Mastery Farm")
         AutoFarmMasDevilFruit = Value
     end)
     Options.ToggleMasteryFruit:SetValue(false)
+
+    local ToggleMasteryGun = Tabs.Main:AddToggle("ToggleMasteryGun", {Title = "Cày Thông Thạo Súng", Default = false })
+    ToggleMasteryGun:OnChanged(function(Value)
+        AutoFarmMasGun = Value
+    end)
+    Options.ToggleMasteryGun:SetValue(false)
 
  
 
@@ -3347,7 +3359,7 @@ end
 if Third_Sea then
     local RoughSea = Tabs.Main:AddSection("Rough Sea")
 
-    local ToggleSailBoat = Tabs.Main:AddToggle("ToggleSailBoat", {Title = "Auto Buy Ship", Default = false })
+    local ToggleSailBoat = Tabs.Main:AddToggle("ToggleSailBoat", {Title = "Mua Thuyền + Ngồi Vào",Description = "", Default = false })
     ToggleSailBoat:OnChanged(function(Value)
         _G.SailBoat = Value
     end)
@@ -3408,7 +3420,7 @@ if Third_Sea then
 	end)
 	
 
-    local ToggleTerrorshark = Tabs.Main:AddToggle("ToggleTerrorshark", {Title = " Kill Terrorshark", Default = false })
+    local ToggleTerrorshark = Tabs.Main:AddToggle("ToggleTerrorshark", {Title = " Giết Terrorshark",Description = "", Default = false })
 
     ToggleTerrorshark:OnChanged(function(Value)
         _G.AutoTerrorshark = Value
@@ -3422,8 +3434,8 @@ if Third_Sea then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Terrorshark" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat wait(0)
-                                         
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCoolDown()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
@@ -3449,7 +3461,7 @@ if Third_Sea then
 
 
 
-     local TogglePiranha = Tabs.Main:AddToggle("TogglePiranha", {Title = " Kill Piranha", Default = false })
+     local TogglePiranha = Tabs.Main:AddToggle("TogglePiranha", {Title = " Giết Piranha",Description = "", Default = false })
 
      TogglePiranha:OnChanged(function(Value)
         _G.farmpiranya = Value
@@ -3464,8 +3476,8 @@ if Third_Sea then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Piranha" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat wait(0)
-                                         
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCoolDown()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
@@ -3491,7 +3503,7 @@ if Third_Sea then
 
 
 
-     local ToggleShark = Tabs.Main:AddToggle("ToggleShark", {Title = " Kill Shark", Default = false })
+     local ToggleShark = Tabs.Main:AddToggle("ToggleShark", {Title = "Giết Cá Mập",Description = "", Default = false })
      ToggleShark:OnChanged(function(Value)
         _G.AutoShark = Value
      end)
@@ -3504,8 +3516,8 @@ if Third_Sea then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Shark" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat wait(0)
-                                         
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCoolDown()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
@@ -3532,7 +3544,7 @@ if Third_Sea then
 
 
 
-    local ToggleFishCrew = Tabs.Main:AddToggle("ToggleFishCrew", {Title = " Kill Fish Crew", Default = false })
+    local ToggleFishCrew = Tabs.Main:AddToggle("ToggleFishCrew", {Title = " Giết Fish Crew",Description = "", Default = false })
     ToggleFishCrew:OnChanged(function(Value)
        _G.AutoFishCrew = Value
     end)
@@ -3546,8 +3558,8 @@ if Third_Sea then
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Fish Crew Member" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat wait(0)
-                                         
+                                    repeat wait(_G.Fast_Delay)
+                                        AttackNoCoolDown()
                                         AutoHaki()
                                         EquipTool(SelectWeapon)
                                         v.HumanoidRootPart.CanCollide = false
@@ -3578,7 +3590,7 @@ if Third_Sea then
 
 
 
-    local ToggleShip = Tabs.Main:AddToggle("ToggleShip", {Title = "Kill Ship", Default = false })
+    local ToggleShip = Tabs.Main:AddToggle("ToggleShip", {Title = "Đánh Thuyền Hải Tặc",Description = "", Default = false })
     ToggleShip:OnChanged(function(Value)
         _G.Ship = Value
        end)
@@ -3618,7 +3630,8 @@ end)
 
 
 
-    local ToggleGhostShip = Tabs.Main:AddToggle("ToggleGhostShip", {Title = "Kill Ghost Ship", Default = false })
+
+    local ToggleGhostShip = Tabs.Main:AddToggle("ToggleGhostShip", {Title = "Đánh Thuyền Ma",Description = "",Default = false })
     ToggleGhostShip:OnChanged(function(Value)
         _G.GhostShip = Value
        end)
@@ -3666,7 +3679,7 @@ spawn(function()
                         game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                         for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
                             if v:IsA("Tool") then
-                                if v.ToolTip == "Melee" then -- "Blox Fruit" , "Sword" , "Wear" , "Agility"
+                                if v.ToolTip == "Melee" then
                                     game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
                                 end
                             end
@@ -3683,7 +3696,7 @@ spawn(function()
                         game:GetService("VirtualInputManager"):SendKeyEvent(false,"C",false,game.Players.LocalPlayer.Character.HumanoidRootPart)
                         for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
                             if v:IsA("Tool") then
-                                if v.ToolTip == "Blox Fruit" then -- "Blox Fruit" , "Sword" , "Wear" , "Agility"
+                                if v.ToolTip == "Blox Fruit" then
                                     game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
                                 end
                             end
@@ -3702,7 +3715,7 @@ spawn(function()
                         wait(0.6)
                         for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
                             if v:IsA("Tool") then
-                                if v.ToolTip == "Sword" then -- "Blox Fruit" , "Sword" , "Wear" , "Agility"
+                                if v.ToolTip == "Sword" then
                                     game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
                                 end
                             end
@@ -3718,7 +3731,7 @@ spawn(function()
                         wait(0.5)
                         for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
                             if v:IsA("Tool") then
-                                if v.ToolTip == "Gun" then -- "Blox Fruit" , "Sword" , "Wear" , "Agility"
+                                if v.ToolTip == "Gun" then 
                                     game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
                                 end
                             end
@@ -3798,7 +3811,7 @@ if Third_Sea then
     local Sea = Tabs.Main:AddSection("Sea Beast")
 
 
-local ToggleSeaBeAst = Tabs.Main:AddToggle("ToggleSeaBeAst", {Title = "Auto Sea Beast", Default = false })
+local ToggleSeaBeAst = Tabs.Main:AddToggle("ToggleSeaBeAst", {Title = "Treo + Đánh Thủy Quái", Default = false })
 
 ToggleSeaBeAst:OnChanged(function(Value)
     _G.AutoSeaBeast = Value
