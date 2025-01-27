@@ -3,12 +3,12 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "R2LX HUB,
-    SubTitle = "Version 1 Chúng tôi sẽ cập nhật thêm",
+    Title = "Văn Thành IOS",
+    SubTitle = "Version 1",
     TabWidth = 160,
     Size = UDim2.fromOffset(530, 350),
     Acrylic = false,
-    Theme = "Light",
+    Theme = "Rose",
     MinimizeKey = Enum.KeyCode.End
 })
 local Tabs = {
@@ -35,7 +35,7 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
 	game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
-local a=Instance.new("ScreenGui")local b=Instance.new("ImageButton")local c=Instance.new("UICorner")a.Parent=game.Players.LocalPlayer:WaitForChild("PlayerGui")a.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;b.Parent=a;b.BackgroundColor3=Color3.fromRGB(255,255,255)b.BorderColor3=Color3.fromRGB(0,0,0)b.BorderSizePixel=0;b.Position=UDim2.new(0.103761353,0,0.214939028,0)b.Size=UDim2.new(0,58,0,55)b.Image="rbxassetid://11474353163"c.Parent=b;local function d()local e=Instance.new('LocalScript',b)e.Parent.MouseButton1Click:Connect(function()game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.End,false,game)end)end;coroutine.wrap(d)()
+local a=Instance.new("ScreenGui")local b=Instance.new("ImageButton")local c=Instance.new("UICorner")a.Parent=game.Players.LocalPlayer:WaitForChild("PlayerGui")a.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;b.Parent=a;b.BackgroundColor3=Color3.fromRGB(255,255,255)b.BorderColor3=Color3.fromRGB(0,0,0)b.BorderSizePixel=0;b.Position=UDim2.new(0.103761353,0,0.214939028,0)b.Size=UDim2.new(0,58,0,55)b.Image="rbxassetid://110365071974573"c.Parent=b;local function d()local e=Instance.new('LocalScript',b)e.Parent.MouseButton1Click:Connect(function()game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.End,false,game)end)end;coroutine.wrap(d)()
 
 First_Sea = false
 Second_Sea = false
@@ -2444,7 +2444,7 @@ _G.FastAttack = true
     end)
 
 
-    local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {Title = "Cày Cấp", Default = false })
+    local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {Title = "Cày Cấp Độ", Default = false })
     ToggleLevel:OnChanged(function(Value)
         _G.LevelFarm = Value
     end)
@@ -2504,7 +2504,7 @@ _G.FastAttack = true
         end
         end)
 
-    local ToggleMobAura = Tabs.Main:AddToggle("ToggleMobAura", {Title = "Đánh Quái Gần", Default = false })
+    local ToggleMobAura = Tabs.Main:AddToggle("ToggleMobAura", {Title = "Đánh Quái Ở Gần", Default = false })
     ToggleMobAura:OnChanged(function(Value)
         _G.AutoNear = Value
     end)
@@ -2542,7 +2542,7 @@ _G.FastAttack = true
         end
       end)
 
-    local ToggleCastleRaid = Tabs.Main:AddToggle("ToggleCastleRaid", {Title = "Đánh Hải Tặc ở Pháo Đài", Default = false })
+    local ToggleCastleRaid = Tabs.Main:AddToggle("ToggleCastleRaid", {Title = "Auto Castle Raid", Default = false })
     ToggleCastleRaid:OnChanged(function(Value)
         _G.CastleRaid = Value
     end)
@@ -2585,7 +2585,7 @@ _G.FastAttack = true
 
 local Mastery = Tabs.Main:AddSection("Mastery Farm")
     local DropdownMastery = Tabs.Main:AddDropdown("DropdownMastery", {
-        Title = "Chọn Chế Độ Cày Thông Thạo",
+        Title = "Mastery Mode",
         Values = {"Level","Near Mobs",},
         Multi = false,
         Default = 1,
