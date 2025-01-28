@@ -4563,6 +4563,29 @@ SelectedPly:OnChanged(function(Value)
     _G.SelectPly = Value
 end)
 
+
+Tabs.Player:AddButton({
+    Title = "Refresh Player",
+    Description = "Làm Mới Người Chơi Trong Server",
+    Callback = function()
+        Playerslist = {}
+        if not SelectedPly then
+            SelectedPly = {} 
+        end
+        if type(SelectedPly.Clear) == "function" then
+            SelectedPly:Clear()
+        end
+        
+        for i, v in pairs(game:GetService("Players"):GetChildren()) do  
+            table.insert(Playerslist, v.Name)
+            if type(SelectedPly.Add) == "function" then
+                SelectedPly:Add(v.Name)
+            end
+        end
+    end
+})
+
+
 local ToggleEnablePvp = Tabs.Player:AddToggle("ToggleEnablePvp", {Title = "Tự động bật PVP", Description = "",Default = false })
 ToggleEnablePvp:OnChanged(function(Value)
   _G.EnabledPvP = Value
