@@ -4591,7 +4591,7 @@ for i,v in pairs(game:GetService("Players"):GetChildren()) do
     table.insert(Playerslist,v.Name)
 end
 
-local SelectedPly = Tabs.C:AddDropdown("SelectedPly", {
+local SelectedPly = Tabs.Player:AddDropdown("SelectedPly", {
     Title = "Select Player",
     Description = "Chọn Người Chơi",
     Values = Playerslist,
