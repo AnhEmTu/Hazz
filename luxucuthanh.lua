@@ -5505,6 +5505,26 @@ spawn(function()
 end
 end)
 
+
+local ToggleBring = Tabs.Fruit:AddToggle("ToggleBring", {Title = "Bring Fruit (Instant)", Default = false })
+ ToggleBring:OnChanged(function(Value)
+    _G.BringFruitBF = Value
+end)
+
+spawn(function()
+    while wait() do
+        if _G.BringFruitBF then
+            pcall(function()
+                for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v:IsA("Tool") then
+                        v.Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                    end
+                end	
+            end)
+        end
+    end
+end)
+
 local Mastery = Tabs.Fruit:AddSection("Định Vị")
 
 
