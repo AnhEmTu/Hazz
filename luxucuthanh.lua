@@ -12,7 +12,7 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.End
 })
 local Tabs = {
-    infor = Window:AddTab({ Title = "Infor", Icon = "notification" }),
+    infor = Window:AddTab({ Title = "Infor", Icon = "rbxassetid://4483345998" }),
     Main = Window:AddTab({ Title = "Main", Icon = "home" }),
     Setting = Window:AddTab({ Title = "Settings", Icon = "settings" }),
     Player = Window:AddTab({ Title = "PvP", Icon = "baby" }),
@@ -2437,33 +2437,54 @@ function()
 	end
 end
 )
-local EmOiDungKhoc = Tabs.infor:AddParagraph({
-        Title = "Trạng Thái: Server Full Moon",
-        Content = ""
-    })
-    spawn(
-            function()
-                        while task.wait() do
-              pcall(  
-                    function()
-             if game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149431" then
-                        EmOiDungKhoc:SetDesc("100%")
-                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" then
-                        EmOiDungKhoc:SetDesc("75%")
-                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709143733" then
-                        EmOiDungKhoc:SetDesc("50%")
-                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150401" then
-                        EmOiDungKhoc:SetDesc("25%")
-                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149680" then
-                        EmOiDungKhoc:SetDesc("15%")
-                    else
-                        EmOiDungKhoc:SetDesc("0%")
+
+local StatusMirage = Tabs.infor:AddParagraph({
+    Title = "Trạng Thái: Server Full Moon",
+    Content = "Status: "
+})
+
+task.spawn(function()
+while task.wait() do
+pcall(function()
+    if game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149431" then
+       FullMoonStatus = "100%"
+    elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149052" then
+        FullMoonStatus = "75%"
+    elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709143733" then
+        FullMoonStatus = "50%"
+    elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709150401" then
+        FullMoonStatus = "25%"
+    elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149680" then
+        FullMoonStatus = "15%"
+    else
+        FullMoonStatus = "0%"
+    end
+end)
 end
-end
-)
-end
-end
-)
+end)
+
+task.spawn(function()
+    while task.wait() do
+        pcall(function()
+        if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
+            MirageStatus = "Found"
+        else
+            MirageStatus = 'Not Found'
+         end
+    end)
+ end
+end)
+
+
+spawn(function()
+    pcall(function()
+        while wait() do
+            StatusMirage:SetDesc("Mirage Island: "..MirageStatus.." | Full Moon: "..FullMoonStatus)
+        end
+    end)
+end)
+
+
 local ConMeMayThangWidiBuCacAnhDi = Tabs.infor:AddParagraph({
     Title = "Trạng Thái: Boss Elite Hunter",
     Content = ""
