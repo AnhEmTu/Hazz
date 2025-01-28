@@ -2,17 +2,17 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/VanThanhIOS/OniiChan
 
        local Window = MakeWindow({
          Hub = {
-         Title = "Văn Thành IOS",
+         Title = "R2LX HUB",
          Animation = "Script Săn Bounty"
          },
         Key = {
         KeySystem = true,
-        Title = "Văn Thành IOS / Script Săn Bounty",
+        Title = "R2LX HUB / Script Săn Bounty",
         Description = "",
         KeyLink = "",
         Keys = {"VanThanhIOS2025"},
         Notifi = {
-        Notifications = true,
+        Notifications = false,
         CorrectKey = "Đang Chạy Kịch Bản",
        Incorrectkey = "Mật Khẩu Không Đúng",
        CopyKeyLink = "Đã Sao Chép"
