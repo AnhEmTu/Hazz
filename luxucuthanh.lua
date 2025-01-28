@@ -41,10 +41,10 @@ Highlight_Folder.Parent = game.CoreGui
 local Highlight = function(Target)
     local Highlight = Instance.new("Highlight")
     Highlight.Name = Target.Name
-    Highlight.FillColor = Color3.fromRGB(255, 255, 0)
+    Highlight.FillColor = Color3.fromRGB(0, 255, 0)
     Highlight.DepthMode = "AlwaysOnTop"
     Highlight.FillTransparency = 0.7
-    Highlight.OutlineColor = Color3.fromRGB(255, 255, 0)
+    Highlight.OutlineColor = Color3.fromRGB(0, 255, 0)
     Highlight.Parent = Highlight_Folder
     if Target.Character then
         Highlight.Adornee = Target.Character
@@ -2489,105 +2489,6 @@ Tabs.infor:AddButton({
         end
     })
    
-   local BuonNaoDauAiThau = Tabs.infor:AddParagraph({
-    Title = "Trạng Thái: Quái Vật Katakuri",
-    Content = ""
-})
-
-spawn(
-function()
-	while wait() do
-		pcall(  
-		function()
-			if string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
-				BuonNaoDauAiThau:SetDesc("Quát Vật Còn Lại: "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,41).."")
-			elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 87 then
-				BuonNaoDauAiThau:SetDesc("Kill : "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,40).."")
-			elseif string.len(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 86 then
-				BuonNaoDauAiThau:SetDesc("Kill : "..string.sub(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"),39,39).." ")
-			else
-				BuonNaoDauAiThau:SetDesc("Quát Vật Katakuri Đang Spwm")
-			end
-		end
-		)
-	end
-end
-)
-
-local EmOiDungKhoc = Tabs.infor:AddParagraph({
-        Title = "Trạng Thái: Server Full Moon",
-        Content = ""
-    })
-    spawn(
-            function()
-                        while task.wait() do
-              pcall(  
-                    function()
-             if game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149431" then
-                        EmOiDungKhoc:SetDesc("100%")
-                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" then
-                        EmOiDungKhoc:SetDesc("75%")
-                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709143733" then
-                        EmOiDungKhoc:SetDesc("50%")
-                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150401" then
-                        EmOiDungKhoc:SetDesc("25%")
-                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149680" then
-                        EmOiDungKhoc:SetDesc("15%")
-                    else
-                        EmOiDungKhoc:SetDesc("0%")
-end
-end
-)
-end
-end
-)
-
-local ConMeMayThangWidiBuCacAnhDi = Tabs.infor:AddParagraph({
-    Title = "Trạng Thái: Boss Elite Hunter",
-    Content = ""
-})
-spawn(
-        function()
-    while wait() do
-        spawn(
-                function()
-            if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") 
-            or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") 
-            or game:GetService("ReplicatedStorage"):FindFirstChild("Urban") 
-            or game:GetService("Workspace").Enemies:FindFirstChild("Diablo") 
-            or game:GetService("Workspace").Enemies:FindFirstChild("Deandre") 
-            or game:GetService("Workspace").Enemies:FindFirstChild("Urban") then
-                ConMeMayThangWidiBuCacAnhDi:SetDesc("Đang Có Boss")	
-            else
-                ConMeMayThangWidiBuCacAnhDi:SetDesc("Không Có Boss")	
-            end
-        end
-        )
-    end
-end
-)
-
-
-local DaoNaoCac = Tabs.infor:AddParagraph({
-    Title = "Trạng Thái: Đảo Kì Bí",
-    Content = ""
-})
-
-local function updateMirageStatus()
-    local mirageIsland = game.Workspace._WorldOrigin.Locations:FindFirstChild('Đảo Kì Bí')
-    if mirageIsland then
-        DaoNaoCac:SetDesc('Trạng Thái: Đang Có Đảo')
-    else
-        DaoNaoCac:SetDesc('Trạng Thái: Không Có Đảo')
-    end
-end
-
-spawn(function()
-    while wait(1) do
-        pcall(updateMirageStatus)
-    end
-end
-)
 ---------------TabStatus
 
     local DropdownSelectWeapon = Tabs.Main:AddDropdown("DropdownSelectWeapon", {
