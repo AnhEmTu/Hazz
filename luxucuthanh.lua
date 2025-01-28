@@ -4933,6 +4933,25 @@ end)
 
 local test = Tabs.Player:AddSection("Misc")
 
+local ToggleNoClip = Tabs.Player:AddToggle("ToggleNoClip", {Title = "Xuyên Tường",Description = "", Default = false })
+ToggleNoClip:OnChanged(function(value)
+    _G.LOf = value
+end)
+Options.ToggleNoClip:SetValue(false)
+spawn(function()
+    pcall(function()
+        game:GetService("RunService").Stepped:Connect(function()
+            if _G.LOf then
+                for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = false    
+                    end
+                end
+            end
+        end)
+    end)
+end)
+
 local ToggleWalkOnWater = Tabs.Player:AddToggle("ToggleWalkOnWater", {Title = "Đi Trên Nước", Default = true })
 ToggleWalkOnWater:OnChanged(function(Value)
     _G.WalkWater = Value
@@ -6362,6 +6381,101 @@ Tabs.Shop:AddButton({
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 --misc
+local Mastery = Tabs.Misc:AddSection("Code")
+
+-- Tạo nút nhấn để nhập hết code
+Tabs.Misc:AddButton({
+    Title = "Nhập Hết Code",
+    Description = "Redeem all codes for x2 EXP",
+    Callback = function()
+        RedeemAllCodes()
+    end
+})
+
+-- Hàm RedeemCode để nhập từng code
+function RedeemCode(Code)
+    local success, err = pcall(function()
+        game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(Code)
+    end)
+    if not success then
+        warn("Không thể nhập code: " .. Code .. " - " .. tostring(err))
+    end
+end
+
+-- Hàm nhập tất cả các code
+function RedeemAllCodes()
+    local codes = {
+        "Sub2Fer999",
+        "Enyu_is_Pro",
+        "Magicbus",
+        "JCWK",
+        "Starcodeheo",
+        "Bluxxy",
+        "THEGREATACE",
+        "SUB2GAMERROBOT_EXP1",
+        "StrawHatMaine",
+        "Sub2OfficialNoobie",
+        "SUB2NOOBMASTER123",
+        "Sub2Daigrock",
+        "Axiore",
+        "TantaiGaming",
+        "STRAWHATMAINE",
+            "NEWTROLL",
+    "KITT_RESET",
+    "Sub2Fer999",
+    "Magicbus",
+    "kittgaming",
+    "SECRET_ADMIN",
+    "EXP_5B",
+    "CONTROL",
+    "UPDATE11",
+    "XMASEXP",
+    "1BILLION",
+    "ShutDownFix2",
+    "UPD14",
+    "STRAWHATMAINE",
+    "TantaiGaming",
+    "Colosseum",
+    "Axiore",
+    "Sub2Daigrock",
+    "Sky Island 3",
+    "Sub2OfficialNoobie",
+    "SUB2NOOBMASTER123",
+    "THEGREATACE",
+    "Fountain City",
+    "BIGNEWS",
+    "FUDD10",
+    "SUB2GAMERROBOT_EXP1",
+    "UPD15",
+    "2BILLION",
+    "UPD16",
+    "3BVISITS",
+    "Starcodeheo",
+    "Bluxxy",
+    "DRAGONABUSE",
+    "Sub2CaptainMaui",
+    "DEVSCOOKING",
+    "Enyu_is_Pro",
+    "JCWK",
+    "Starcodeheo",
+    "Bluxxy",
+    "fudd10_v2",
+    "SUB2GAMERROBOT_EXP1",
+    "Sub2NoobMaster123",
+    "Sub2UncleKizaru",
+    "Sub2Daigrock",
+    "Axiore",
+    "TantaiGaming",
+    "StrawHatMaine"
+    }
+
+    for _, code in ipairs(codes) do
+        RedeemCode(code)
+        wait(0.5) -- Thêm thời gian chờ giữa các lệnh để tránh lỗi
+    end
+end
+
+local Mastery = Tabs.Misc:AddSection("Sever")
 
 Tabs.Misc:AddButton({
 	Title = "Tham Gia Server",
