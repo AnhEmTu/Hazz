@@ -4511,7 +4511,6 @@ ToggleFruit:OnChanged(function(Value)
     end)
 Options.ToggleFruit:SetValue(false)
 
-
 spawn(function()
     while wait() do
         if _G.Auto_Stats_Devil_Fruit then
@@ -4584,8 +4583,6 @@ spawn(function()
     end
 end)
 
-
----//ComBat
 local Playerslist = {}
 for i,v in pairs(game:GetService("Players"):GetChildren()) do
     table.insert(Playerslist,v.Name)
@@ -4593,57 +4590,16 @@ end
 
 local SelectedPly = Tabs.Player:AddDropdown("SelectedPly", {
     Title = "Select Player",
-    Description = "Chọn Người Chơi",
     Values = Playerslist,
     Multi = false,
     Default = 1,
 })
 
-SelectedPly:SetValue("nil")
 SelectedPly:OnChanged(function(Value)
     _G.SelectPly = Value
 end)
 
 
-Tabs.Player:AddButton({
-    Title = "Refresh Player",
-    Description = "Làm Mới Người Chơi Trong Server",
-    Callback = function()
-        Playerslist = {}
-        if not SelectedPly then
-            SelectedPly = {} 
-        end
-        if type(SelectedPly.Clear) == "function" then
-            SelectedPly:Clear()
-        end
-        
-        for i, v in pairs(game:GetService("Players"):GetChildren()) do  
-            table.insert(Playerslist, v.Name)
-            if type(SelectedPly.Add) == "function" then
-                SelectedPly:Add(v.Name)
-            end
-        end
-    end
-})
-
-
-local ToggleEnablePvp = Tabs.Player:AddToggle("ToggleEnablePvp", {Title = "Tự động bật PVP", Description = "",Default = false })
-ToggleEnablePvp:OnChanged(function(Value)
-  _G.EnabledPvP = Value
-end)
-Options.ToggleEnablePvp:SetValue(false)
-
-spawn(function()
-  pcall(function()
-      while wait() do
-          if _G.EnabledPvP then
-              if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
-                  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
-              end
-          end
-      end
-  end)
-end)
 
 local ToggleTeleport = Tabs.Player:AddToggle("ToggleTeleport", {Title = "Bay Đến Người Chơi", Default = false })
 ToggleTeleport:OnChanged(function(Value)
@@ -4669,6 +4625,23 @@ ToggleQuanSat:OnChanged(function(Value)
 end)
 Options.ToggleQuanSat:SetValue(false)
 
+local ToggleEnablePvp = Tabs.Player:AddToggle("ToggleEnablePvp", {Title = "Tự động bật PVP", Description = "",Default = false })
+ToggleEnablePvp:OnChanged(function(Value)
+  _G.EnabledPvP = Value
+end)
+Options.ToggleEnablePvp:SetValue(false)
+
+spawn(function()
+  pcall(function()
+      while wait() do
+          if _G.EnabledPvP then
+              if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
+                  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
+              end
+          end
+      end
+  end)
+end)
 
 local Teleport = Tabs.Player:AddSection("PVP")
 
