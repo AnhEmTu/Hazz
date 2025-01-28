@@ -4451,6 +4451,41 @@ Tabs.Setting:AddButton({
         end
     end
 
+-- Tạo nút "Fps Người Chơi"
+Tabs.Setting:AddButton({
+    Title = "Fps Người Chơi",
+    Description = "Tăng FPS bằng cách tối ưu hóa nhân vật",
+    Callback = function()
+        FPSPlayer() -- Hàm tăng FPS (nếu có)
+    end
+})
+
+-- Hàm tối ưu hóa nhân vật người chơi
+local function OptimizeCharacter(character)
+    -- Duyệt qua tất cả các đối tượng trong nhân vật
+    for _, obj in pairs(character:GetDescendants()) do
+        if obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("MeshPart") then
+            obj.Transparency = 0.9 -- Đặt độ trong suốt cao để giảm tải
+        elseif obj:IsA("Accessory") then
+            obj:Destroy() -- Xóa phụ kiện không cần thiết để tăng hiệu năng
+        end
+    end
+end
+
+-- Lấy người chơi hiện tại
+local player = game.Players.LocalPlayer
+
+-- Nếu nhân vật đã tồn tại, áp dụng tối ưu hóa ngay lập tức
+if player and player.Character then
+    OptimizeCharacter(player.Character)
+end
+
+-- Kết nối sự kiện khi nhân vật tái sinh để áp dụng tối ưu hóa
+player.CharacterAdded:Connect(function(character)
+    OptimizeCharacter(character)
+end)
+    
+    
         local SKill = Tabs.Setting:AddSection("Cài Đặt Mastery")
 local ToggleZ = Tabs.Setting:AddToggle("ToggleZ", {Title = "Skill Z", Default = true })
 ToggleZ:OnChanged(function(Value)
