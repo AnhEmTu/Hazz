@@ -3,11 +3,11 @@ local VirtualInputManager = game:GetService("VirtualInputManager")
 local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/VanThanhIOS/VanThanhLuxucu/refs/heads/main/main.txt"))()
  
 local Hub = Material.Load({
-	Title = "Script Được Source Code - Admin : R2LX HUB",
+	Title = "Nhớ Đăng Ký Kênh KimP Roblox Nha !",
 	Style = 3,
 	SizeX = 300,
 	SizeY = 300,
-	Theme = "Dark",
+	Theme = "Light",
 	ColorOverrides = {
 		MainFrame = Color3.fromRGB(235,235,235)
 	}
