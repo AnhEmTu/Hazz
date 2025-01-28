@@ -3,11 +3,11 @@ local VirtualInputManager = game:GetService("VirtualInputManager")
 local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/VanThanhIOS/VanThanhLuxucu/refs/heads/main/main.txt"))()
  
 local Hub = Material.Load({
-	Title = "Nhớ Đăng Ký Kênh Nha !",
+	Title = "Script Được Source Code - Admin : R2LX HUB",
 	Style = 3,
 	SizeX = 300,
 	SizeY = 300,
-	Theme = "Rose",
+	Theme = "Dark",
 	ColorOverrides = {
 		MainFrame = Color3.fromRGB(235,235,235)
 	}
@@ -16,15 +16,7 @@ local Hub = Material.Load({
 local Home = Hub.New({
 	Title = "Home"
 })
-
-local Hitbox = Hub.New({
-    Title = "Hitbox 120"
-})
-
-local Eps = Hub.New({
-    Title = "Hitbox 120"
-})
-
+ 
 _G.Tween = nil
 _G.Play = false
 _G.CloseAllScript = false
@@ -139,54 +131,3 @@ while wait(1) do
 		end
 	end
 end
-
-local ToggleHitbox = Hitbox.Toggle({
-    Text = "Hitbox 120",
-	Callback = function(Value)
-            
-local InfiniteJumpEnabled = false
-game:GetService("UserInputService").JumpRequest:connect(function()
-    if InfiniteJumpEnabled then
-        game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
-    end
-end)
- 
-local vu = game:GetService("VirtualUser")
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-    wait(1)
-    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
- 
-game.StarterGui:SetCore("SendNotification", {
-    Title = "Văn Thành IOS";
-    Text = "Đã Bật hitbox"; -- what the text says (ofc)
-    Duration = 1;
-})
-wait(1)
-game.StarterGui:SetCore("SendNotification", {
-    Title = "Văn Thành IOS";
-    Text = "YTB: @thanhdzso1"; -- what the text says (ofc)
-    Duration = 1;
-})
-_G.HeadSize = 120
-_G.Disabled = true
- 
-game:GetService('RunService').RenderStepped:connect(function()
-if _G.Disabled then
-for i,v in next, game:GetService('Players'):GetPlayers() do
-if v.Name ~= game:GetService('Players').LocalPlayer.Name then
-pcall(function()
-v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
-v.Character.HumanoidRootPart.Transparency = 1.0
-v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really black")
-v.Character.HumanoidRootPart.Material = "Neon"
-v.Character.HumanoidRootPart.CanCollide = false
-end)
-end
-end
-end
-end)
-            
-  end
-  })
