@@ -2587,146 +2587,173 @@ _G.FastAttack = true
 _G.Tween = nil
 _G.Play = false
 _G.CloseAllScript = false
+
+-- Tạo toggle để bật/tắt chức năng nhặt rương
 local ToggleChestTween = Tabs.Main:AddToggle("ToggleChestTween", {
     Title = "Nhặt Rương [Bay]",
-    Description = "", 
-    Default = false })
-ToggleChestTween:OnChanged(function(Value)
-		_G.Play = Value
-	end,
-	Enabled = _G.Play
+    Description = "",
+    Default = false
 })
- 
-game:GetService('RunService').Stepped:connect(function()
-	if _G.Play then
-		local HumanoidRootPart = Player.Character:WaitForChild("HumanoidRootPart")
-		local Humanoid = Player.Character:WaitForChild("Humanoid")
-		HumanoidRootPart.Velocity = Vector3.new(0,0,0)
-		for i,v in pairs(Player.Character:GetDescendants()) do
-			if v:IsA("BasePart") then
-				v.CanCollide = false
-			end
-		end
-		Humanoid.Sit = false
-	end
+ToggleChestTween:OnChanged(function(Value)
+    _G.Play = Value
 end)
- 
-function Tween(Part)
-	if _G.Tween then
-		_G.Tween:Cancel()
-	end
-	local HumanoidRootPart = Player.Character:WaitForChild("HumanoidRootPart")
-	_G.Tween = game:GetService("TweenService"):Create(HumanoidRootPart,TweenInfo.new((Part.Position-HumanoidRootPart.Position).magnitude/300,Enum.EasingStyle.Linear,Enum.EasingDirection.InOut),{CFrame = Part.CFrame})
-	_G.Tween:Play()
-	local flying = true
-	while game:GetService("RunService").Stepped:Wait() and flying and _G.Play do
-		if _G.Play == false then
-			_G.Tween:Cancel()
-		end
-		if (Part.Position-HumanoidRootPart.Position).magnitude < 250 then
-			_G.Tween:Cancel()
-			for i = 1,5 do
-				HumanoidRootPart.CFrame = Part.CFrame
-				wait()
-			end
-			flying = false
-		end
-	end
-end
- 
-function TableNearToFarChests()
-	local HumanoidRootPart = Player.Character:WaitForChild("HumanoidRootPart")
-	local chests = {}
-	local checkedchests = {}
-	local function Check(v)
-		for i,e in pairs(checkedchests) do
-			if v == e then
-				return false
-			end
-		end
-		return true
-	end
-	local function A(tablec)
-		local nearest
-		local sus
-		for i,v in pairs(tablec) do
-			local real = Check(v)
-			if real then
-				if nearest then
-					if (v.Position-HumanoidRootPart.Position).magnitude < nearest then
-                        nearest = (v.Position-HumanoidRootPart.Position).magnitude
-						sus = v
-					end
-				else
-					nearest = (v.Position-HumanoidRootPart.Position).magnitude
-                    sus = v
-				end
-			end
-		end
-		return sus
-	end
-	local function B(tablec)
-		local C = A(tablec)
-		if C then
-			table.insert(checkedchests,C)
-			B(tablec)
-		end
-		return checkedchests
-	end
-	for i,v in pairs(workspace:GetDescendants()) do
-		if v.Name == "Chest1" or v.Name == "Chest2" or v.Name == "Chest3" then
-			table.insert(chests,v)
-		end
-	end
-	B(chests)
-	return chests,checkedchests
-end
- 
-repeat wait() until game:IsLoaded()
- 
-while wait(1) do
-	if _G.Play then
-		local chests,checkedchests = TableNearToFarChests()
-		for i,v in pairs(checkedchests) do
-			Tween(v)
-			if _G.Play == false then
-				break
-			end
-		end
-	else
-		if _G.Tween then
-			_G.Tween:Cancel()
-		end
-	end
-end
 
-
-      Tabs.Main:AddButton({
-        Title = "Nhập Hết Code",
-        Description = "Redeem all code x2 exp",
-        Callback = function()
-            RedeemCode()
+-- Đảm bảo nhân vật không va chạm và dừng di chuyển
+game:GetService('RunService').Stepped:connect(function()
+    if _G.Play then
+        local HumanoidRootPart = Player.Character:WaitForChild("HumanoidRootPart")
+        local Humanoid = Player.Character:WaitForChild("Humanoid")
+        HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+        for _, v in pairs(Player.Character:GetDescendants()) do
+            if v:IsA("BasePart") then
+                v.CanCollide = false
+            end
         end
-    })
+        Humanoid.Sit = false
+    end
+end)
 
-    function RedeemCode(Code)
-		game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(Code)
-	end
-    RedeemCode("Sub2Fer999")
-    RedeemCode("Enyu_is_Pro")
-    RedeemCode("Magicbus")
-    RedeemCode("JCWK")
-    RedeemCode("Starcodeheo")
-    RedeemCode("Bluxxy")
-    RedeemCode("THEGREATACE")
-    RedeemCode("SUB2GAMERROBOT_EXP1")
-    RedeemCode("StrawHatMaine")
-    RedeemCode("Sub2OfficialNoobie")
-    RedeemCode("SUB2NOOBMASTER123")
-    RedeemCode("Sub2Daigrock")
-    RedeemCode("Axiore")
-    RedeemCode("TantaiGaming")
-    RedeemCode("STRAWHATMAINE")
+-- Hàm Tween để di chuyển đến rương
+function Tween(Part)
+    if _G.Tween then
+        _G.Tween:Cancel()
+    end
+    local HumanoidRootPart = Player.Character:WaitForChild("HumanoidRootPart")
+    _G.Tween = game:GetService("TweenService"):Create(
+        HumanoidRootPart,
+        TweenInfo.new((Part.Position - HumanoidRootPart.Position).magnitude / 300, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut),
+        {CFrame = Part.CFrame}
+    )
+    _G.Tween:Play()
+    local flying = true
+    while game:GetService("RunService").Stepped:Wait() and flying and _G.Play do
+        if not _G.Play then
+            _G.Tween:Cancel()
+        end
+        if (Part.Position - HumanoidRootPart.Position).magnitude < 250 then
+            _G.Tween:Cancel()
+            for _ = 1, 5 do
+                HumanoidRootPart.CFrame = Part.CFrame
+                wait()
+            end
+            flying = false
+        end
+    end
+end
+
+-- Hàm tìm rương gần nhất và sắp xếp theo khoảng cách
+function TableNearToFarChests()
+    local HumanoidRootPart = Player.Character:WaitForChild("HumanoidRootPart")
+    local chests = {}
+    local checkedchests = {}
+
+    local function Check(v)
+        for _, e in pairs(checkedchests) do
+            if v == e then
+                return false
+            end
+        end
+        return true
+    end
+
+    local function FindNearestChest(tablec)
+        local nearest, target = nil, nil
+        for _, v in pairs(tablec) do
+            if Check(v) then
+                local distance = (v.Position - HumanoidRootPart.Position).magnitude
+                if not nearest or distance < nearest then
+                    nearest = distance
+                    target = v
+                end
+            end
+        end
+        return target
+    end
+
+    local function SortChests(tablec)
+        local chest = FindNearestChest(tablec)
+        if chest then
+            table.insert(checkedchests, chest)
+            SortChests(tablec)
+        end
+        return checkedchests
+    end
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v.Name == "Chest1" or v.Name == "Chest2" or v.Name == "Chest3" then
+            table.insert(chests, v)
+        end
+    end
+
+    SortChests(chests)
+    return chests, checkedchests
+end
+
+-- Đợi game tải hoàn toàn
+repeat wait() until game:IsLoaded()
+
+-- Chạy vòng lặp để tự động nhặt rương
+while wait(1) do
+    if _G.Play then
+        local chests, checkedchests = TableNearToFarChests()
+        for _, v in pairs(checkedchests) do
+            Tween(v)
+            if not _G.Play then
+                break
+            end
+        end
+    else
+        if _G.Tween then
+            _G.Tween:Cancel()
+        end
+    end
+end
+
+
+-- Tạo nút nhấn để nhập hết code
+Tabs.Main:AddButton({
+    Title = "Nhập Hết Code",
+    Description = "Redeem all codes for x2 EXP",
+    Callback = function()
+        RedeemAllCodes()
+    end
+})
+
+-- Hàm RedeemCode để nhập từng code
+function RedeemCode(Code)
+    local success, err = pcall(function()
+        game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(Code)
+    end)
+    if not success then
+        warn("Không thể nhập code: " .. Code .. " - " .. tostring(err))
+    end
+end
+
+-- Hàm nhập tất cả các code
+function RedeemAllCodes()
+    local codes = {
+        "Sub2Fer999",
+        "Enyu_is_Pro",
+        "Magicbus",
+        "JCWK",
+        "Starcodeheo",
+        "Bluxxy",
+        "THEGREATACE",
+        "SUB2GAMERROBOT_EXP1",
+        "StrawHatMaine",
+        "Sub2OfficialNoobie",
+        "SUB2NOOBMASTER123",
+        "Sub2Daigrock",
+        "Axiore",
+        "TantaiGaming",
+        "STRAWHATMAINE"
+    }
+
+    for _, code in ipairs(codes) do
+        RedeemCode(code)
+        wait(0.5) -- Thêm thời gian chờ giữa các lệnh để tránh lỗi
+    end
+end
     
 local Mastery = Tabs.Main:AddSection("Cày Thông Thạo")
     local DropdownMastery = Tabs.Main:AddDropdown("DropdownMastery", {
