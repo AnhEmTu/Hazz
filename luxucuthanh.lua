@@ -965,32 +965,32 @@ end
 
 --// Check Material
 function MaterialMon()
-if SelectMaterial == "Radioactive Material" then
+if SelectMaterial == "Chất phóng xạ" then
 MMon = "Factory Staff"
 MPos = CFrame.new(295,73,-56)
 SP = "Default"
-elseif SelectMaterial == "Mystic Droplet" then
+elseif SelectMaterial == "Nước Mắt Huyền Bí" then
 MMon = "Water Fighter"
 MPos = CFrame.new(-3385,239,-10542)
 SP = "Default"
-elseif SelectMaterial == "Magma Ore" then
+elseif SelectMaterial == "Quặng magma" then
 if First_Sea then
 MMon = "Military Spy"
 MPos = CFrame.new(-5815,84,8820)
 SP = "Default"
 elseif Second_Sea then
-MMon = "Magma Ninja"
+MMon = "Ninja dung nham"
 MPos = CFrame.new(-5428,78,-5959)
 SP = "Default"
 end
-elseif SelectMaterial == "Angel Wings" then
+elseif SelectMaterial == "Đôi cánh thiên thần" then
 MMon = "God's Guard"
 MPos = CFrame.new(-4698,845,-1912)
 SP = "Default"
 if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(-7859.09814, 5544.19043, -381.476196)).Magnitude >= 5000 then
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7859.09814, 5544.19043, -381.476196))
 end
-elseif SelectMaterial == "Leather" then
+elseif SelectMaterial == "Da" then
 if First_Sea then
 MMon = "Brute"
 MPos = CFrame.new(-1145,15,4350)
@@ -1004,7 +1004,7 @@ MMon = "Jungle Pirate"
 MPos = CFrame.new(-11975.78515625, 331.7734069824219, -10620.0302734375)
 SP = "Default"
 end
-elseif SelectMaterial == "Scrap Metal" then
+elseif SelectMaterial == "Phế liệu kim loại" then
 if First_Sea then
 MMon = "Brute"
 MPos = CFrame.new(-1145,15,4350)
@@ -1018,7 +1018,7 @@ MMon = "Jungle Pirate"
 MPos = CFrame.new(-12107,332,-10549)
 SP = "Default"
 end
-elseif SelectMaterial == "Fish Tail" then
+elseif SelectMaterial == "Đuôi cá" then
 if Third_Sea then
 MMon = "Fishman Raider"
 MPos = CFrame.new(-10993,332,-8940)
@@ -1031,27 +1031,27 @@ if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(6
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875))
 end
 end
-elseif SelectMaterial == "Demonic Wisp" then
+elseif SelectMaterial == "Ma quỷ" then
 MMon = "Demonic Soul"
 MPos = CFrame.new(-9507,172,6158)
 SP = "Default"
-elseif SelectMaterial == "Vampire Fang" then
+elseif SelectMaterial == "Nanh ma cà rồng" then
 MMon = "Vampire"
 MPos = CFrame.new(-6033,7,-1317)
 SP = "Default"
-elseif SelectMaterial == "Conjured Cocoa" then
+elseif SelectMaterial == "Bột Cocoa" then
 MMon = "Chocolate Bar Battler"
 MPos = CFrame.new(620.6344604492188,78.93644714355469, -12581.369140625)
 SP = "Default"
-elseif SelectMaterial == "Dragon Scale" then
+elseif SelectMaterial == "Vảy rồng" then
 MMon = "Dragon Crew Archer"
 MPos = CFrame.new(6594,383,139)
 SP = "Default"
-elseif SelectMaterial == "Gunpowder" then
+elseif SelectMaterial == "Thuốc súng" then
 MMon = "Pistol Billionaire"
 MPos = CFrame.new(-469,74,5904)
 SP = "Default"
-elseif SelectMaterial == "Mini Tusk" then
+elseif SelectMaterial == "Ngà Nhỏ" then
 MMon = "Mythological Pirate"
 MPos = CFrame.new(-13545,470,-6917)
 SP = "Default"
@@ -3052,13 +3052,13 @@ local boss = Tabs.Main:AddSection("Đánh Trùm")
 
     if First_Sea then
         MaterialList = {
-          "Kim loại phế liệu","Da","Đôi cánh thiên thần","Quặng magma","Đuôi cá"
+          "Phế liệu kim loại","Da","Đôi cánh thiên thần","Quặng magma","Đuôi cá"
         } elseif Second_Sea then
         MaterialList = {
-          "Kim loại phế liệu","Da","Vật liệu phóng xạ","Giọt huyền bí","Quặng magma","Nanh ma cà rồng"
+          "Phế liệu kim loại","Da","Chất phóng xạ","Nước Mắt Huyền Bí","Quặng magma","Nanh ma cà rồng"
         } elseif Third_Sea then
         MaterialList = {
-          "Kim loại phế liệu","Da","Demonic Wisp","Ca cao","Vảy rồng","Thuốc súng","Đuôi cá","Ngà nhỏ"
+          "Phế liệu kim loại","Da","Ma quỷ","Bột Cocoa","Vảy rồng","Thuốc súng","Đuôi cá","Ngà Nhỏ"
         }
         end
 
@@ -3069,7 +3069,7 @@ local boss = Tabs.Main:AddSection("Đánh Trùm")
         Default = 1,
     })
 
-    DropdownMaterial:SetValue("Conjured Cocoa")
+    DropdownMaterial:SetValue("Bột Cocoa")
 
     DropdownMaterial:OnChanged(function(Value)
         SelectMaterial = Value
@@ -4747,7 +4747,7 @@ if First_Sea then
         "Làng cướp biển", 
         "Sa mạc",
         "Đảo Tuyết", 
-        "MarineFord", 
+        "Pháo Đài Hải Quân", 
         "Đấu trường La Mã", 
         "Đảo trời 1", 
         "Đảo bầu trời 2", 
@@ -4782,9 +4782,9 @@ elseif Second_Sea then
 
 elseif Third_Sea then
     IslandList = {
-        "Biệt thự",
+        "Dinh thự",
         "Thành phố Cảng",
-        "Cây lớn",
+        "Cây đại thụ",
         "Lâu đài trên biển", 
         "Sky nhỏ", 
         "Đảo Hydra", 
@@ -4795,7 +4795,7 @@ elseif Third_Sea then
         "Đảo Bánh", 
         "Đảo ca cao", 
         "Đảo Kẹo", 
-        "Tiền đồn đảo",
+        "Đảo tiki",
        }
     end
 
@@ -4811,114 +4811,123 @@ DropdownIsland:OnChanged(function(Value)
     _G.SelectIsland = Value
 end)
 
-
-local ToggleIsland = Tabs.Teleport:AddToggle("ToggleIsland", {Title = "Chọn Đảo", Default = false })
-ToggleIsland:OnChanged(function(Value)
-    _G.TeleportIsland = Value
-    if _G.TeleportIsland == true then
-        repeat wait()
-            if _G.SelectIsland == "WindMill" then
+Tabs.Teleport:AddButton({
+    Title = "Tween",
+    Description = "Bay Đến Đảo",
+    Callback = function()
+            if _G.SelectIsland == "Cối xay gió" then
                 toTarget(CFrame.new(979.79895019531, 16.516613006592, 1429.0466308594))
-            elseif _G.SelectIsland == "Marine" then
+            elseif _G.SelectIsland == "Hàng hải" then
                 toTarget(CFrame.new(-2566.4296875, 6.8556680679321, 2045.2561035156))
-            elseif _G.SelectIsland == "Middle Town" then
+            elseif _G.SelectIsland == "Thị trấn trung tâm" then
                 toTarget(CFrame.new(-690.33081054688, 15.09425163269, 1582.2380371094))
             elseif _G.SelectIsland == "Rừng" then
                 toTarget(CFrame.new(-1612.7957763672, 36.852081298828, 149.12843322754))
-            elseif _G.SelectIsland == "Pirate Village" then
+            elseif _G.SelectIsland == "Làng cướp biển" then
                 toTarget(CFrame.new(-1181.3093261719, 4.7514905929565, 3803.5456542969))
-            elseif _G.SelectIsland == "Desert" then
+            elseif _G.SelectIsland == "Sa mạc" then
                 toTarget(CFrame.new(944.15789794922, 20.919729232788, 4373.3002929688))
-            elseif _G.SelectIsland == "Snow Island" then
+            elseif _G.SelectIsland == "Đảo Tuyết" then
                 toTarget(CFrame.new(1347.8067626953, 104.66806030273, -1319.7370605469))
-            elseif _G.SelectIsland == "MarineFord" then
+            elseif _G.SelectIsland == "Pháo Đài Hải Quân" then
                 toTarget(CFrame.new(-4914.8212890625, 50.963626861572, 4281.0278320313))
-            elseif _G.SelectIsland == "Colosseum" then
+            elseif _G.SelectIsland == "Đấu trường La Mã" then
                 toTarget( CFrame.new(-1427.6203613281, 7.2881078720093, -2792.7722167969))
-            elseif _G.SelectIsland == "Sky Island 1" then
+            elseif _G.SelectIsland == "Đảo trời 1" then
                 toTarget(CFrame.new(-4869.1025390625, 733.46051025391, -2667.0180664063))
-            elseif _G.SelectIsland == "Sky Island 2" then  
+            elseif _G.SelectIsland == "Đảo bầu trời 2" then  
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
-            elseif _G.SelectIsland == "Sky Island 3" then
+            elseif _G.SelectIsland == "Đảo bầu trời 3" then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
-            elseif _G.SelectIsland == "Prison" then
+            elseif _G.SelectIsland == "Nhà tù" then
                 toTarget( CFrame.new(4875.330078125, 5.6519818305969, 734.85021972656))
-            elseif _G.SelectIsland == "Magma Village" then
+            elseif _G.SelectIsland == "Làng magma" then
                 toTarget(CFrame.new(-5247.7163085938, 12.883934020996, 8504.96875))
-            elseif _G.SelectIsland == "Under Water Island" then
+            elseif _G.SelectIsland == "Đảo dưới nước" then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
-            elseif _G.SelectIsland == "Fountain City" then
+            elseif _G.SelectIsland == "Thành phố đài phun nước" then
                 toTarget(CFrame.new(5127.1284179688, 59.501365661621, 4105.4458007813))
-            elseif _G.SelectIsland == "Shank Room" then
+            elseif _G.SelectIsland == "Phòng Chân" then
                 toTarget(CFrame.new(-1442.16553, 29.8788261, -28.3547478))
-            elseif _G.SelectIsland == "Mob Island" then
+            elseif _G.SelectIsland == "Đảo Mob" then
                 toTarget(CFrame.new(-2850.20068, 7.39224768, 5354.99268))
-            elseif _G.SelectIsland == "The Cafe" then
-                toTarget(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
-            elseif _G.SelectIsland == "Frist Spot" then
+                -- -- --SEA 2
+            elseif _G.SelectIsland == "Quán cà phê" then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-281.93707275390625, 306.130615234375, 609.280029296875))
+                wait(0.5)
+                Tween2(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
+            elseif _G.SelectIsland == "Điểm đầu tiên" then
                 toTarget(CFrame.new(-11.311455726624, 29.276733398438, 2771.5224609375))
-            elseif _G.SelectIsland == "Dark Area" then
+            elseif _G.SelectIsland == "Vùng tối" then
                 toTarget(CFrame.new(3780.0302734375, 22.652164459229, -3498.5859375))
-            elseif _G.SelectIsland == "Flamingo Mansion" then
-                BTPZ(CFrame.new(-483.73370361328, 332.0383605957, 595.32708740234))
-            elseif _G.SelectIsland == "Flamingo Room" then
-                toTarget(CFrame.new(2284.4140625, 15.152037620544, 875.72534179688))
-            elseif _G.SelectIsland == "Green Zone" then
+            elseif _G.SelectIsland == "Biệt thự chim hồng hạc" then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-281.93707275390625, 306.130615234375, 609.280029296875))
+            elseif _G.SelectIsland == "Phòng chim hồng hạc" then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(2284.912109375, 15.152034759521484, 905.48291015625))
+            elseif _G.SelectIsland == "Vùng xanh" then
                 toTarget( CFrame.new(-2448.5300292969, 73.016105651855, -3210.6306152344))
-            elseif _G.SelectIsland == "Factory" then
+            elseif _G.SelectIsland == "Nhà máy" then
                 toTarget(CFrame.new(424.12698364258, 211.16171264648, -427.54049682617))
             elseif _G.SelectIsland == "Colossuim" then
                 toTarget( CFrame.new(-1503.6224365234, 219.7956237793, 1369.3101806641))
-            elseif _G.SelectIsland == "Zombie Island" then
+            elseif _G.SelectIsland == "Đảo Zombie" then
                 toTarget(CFrame.new(-5622.033203125, 492.19604492188, -781.78552246094))
-            elseif _G.SelectIsland == "Two Snow Mountain" then
+            elseif _G.SelectIsland == "Hai ngọn núi tuyết" then
                 toTarget(CFrame.new(753.14288330078, 408.23559570313, -5274.6147460938))
-            elseif _G.SelectIsland == "Punk Hazard" then
+            elseif _G.SelectIsland == "Nguy hiểm Punk" then
                 toTarget(CFrame.new(-6127.654296875, 15.951762199402, -5040.2861328125))
-            elseif _G.SelectIsland == "Cursed Ship" then
-                toTarget(CFrame.new(923.40197753906, 125.05712890625, 32885.875))
-            elseif _G.SelectIsland == "Ice Castle" then
+            elseif _G.SelectIsland == "Con tàu bị nguyền rủa" then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.40197753906, 125.05712890625, 32885.875))
+            elseif _G.SelectIsland == "Lâu đài băng" then
                 toTarget(CFrame.new(6148.4116210938, 294.38687133789, -6741.1166992188))
-            elseif _G.SelectIsland == "Forgotten Island" then
+            elseif _G.SelectIsland == "Đảo bị lãng quên" then
                 toTarget(CFrame.new(-3032.7641601563, 317.89672851563, -10075.373046875))
-            elseif _G.SelectIsland == "Ussop Island" then
+            elseif _G.SelectIsland == "Đảo Ussop" then
                 toTarget(CFrame.new(4816.8618164063, 8.4599885940552, 2863.8195800781))
-            elseif _G.SelectIsland == "Mini Sky Island" then
-                toTarget(CFrame.new(-288.74060058594, 49326.31640625, -35248.59375))
-            elseif _G.SelectIsland == "Great Tree" then
+            elseif _G.SelectIsland == "Đảo bầu trời thu nhỏ" then
+                Tween2(CFrame.new(-288.74060058594, 49326.31640625, -35248.59375))
+                ---SEA 3
+            elseif _G.SelectIsland == "Cây đại thụ" then
                 toTarget(CFrame.new(2681.2736816406, 1682.8092041016, -7190.9853515625))
-            elseif _G.SelectIsland == "Castle On The Sea" then
-                BTPZ(CFrame.new(-5075.50927734375, 314.5155029296875, -3150.0224609375))
-            elseif _G.SelectIsland == "MiniSky" then
-                toTarget(CFrame.new(-260.65557861328, 49325.8046875, -35253.5703125))
-            elseif _G.SelectIsland == "Port Town" then
+            elseif _G.SelectIsland == "Lâu đài trên biển" then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-5075.50927734375, 314.5155029296875, -3150.0224609375))
+            elseif _G.SelectIsland == "Sky nhỏ" then
+                Tween2(CFrame.new(-260.65557861328, 49325.8046875, -35253.5703125))
+            elseif _G.SelectIsland == "Thành phố Cảng" then
                 toTarget(CFrame.new(-290.7376708984375, 6.729952812194824, 5343.5537109375))
-            elseif _G.SelectIsland == "Hydra Island" then
-                BTPZ(CFrame.new(5753.5478515625, 610.7880859375, -282.33172607421875))
-            elseif _G.SelectIsland == "Floating Turtle" then
+            elseif _G.SelectIsland == "Đảo Hydra" then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5753.5478515625, 610.7880859375, -282.33172607421875))
+            elseif _G.SelectIsland == "Rùa nổi" then
                 toTarget(CFrame.new(-13274.528320313, 531.82073974609, -7579.22265625))
-            elseif _G.SelectIsland == "Mansion" then
-                BTPZ(CFrame.new(-12468.5380859375, 375.0094299316406, -7554.62548828125))
-            elseif _G.SelectIsland == "Haunted Castle" then
+            elseif _G.SelectIsland == "Dinh thự" then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12468.5380859375, 375.0094299316406, -7554.62548828125))
+            elseif _G.SelectIsland == "Lâu đài ma ám" then
                 toTarget(CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562))
-            elseif _G.SelectIsland == "Ice Cream Island" then
+            elseif _G.SelectIsland == "Đảo kem" then
                 toTarget(CFrame.new(-902.56817626953, 79.93204498291, -10988.84765625))
-            elseif _G.SelectIsland == "Peanut Island" then
+            elseif _G.SelectIsland == "Đảo Đậu Phộng" then
                 toTarget(CFrame.new(-2062.7475585938, 50.473892211914, -10232.568359375))
-            elseif _G.SelectIsland == "Cake Island" then
+            elseif _G.SelectIsland == "Đảo Bánh" then
                 toTarget(CFrame.new(-1884.7747802734375, 19.327526092529297, -11666.8974609375))
-            elseif _G.SelectIsland == "Cocoa Island" then
+            elseif _G.SelectIsland == "Đảo ca cao" then
                 toTarget(CFrame.new(87.94276428222656, 73.55451202392578, -12319.46484375))
-            elseif _G.SelectIsland == "Candy Island" then
+            elseif _G.SelectIsland == "Đảo Kẹo" then
                 toTarget(CFrame.new(-1014.4241943359375, 149.11068725585938, -14555.962890625))
-            elseif _G.SelectIsland == "Isle Outpost" then
+            elseif _G.SelectIsland == "Đảo tiki" then
                 toTarget(CFrame.new(-16542.447265625, 55.68632888793945, 1044.41650390625))
             end
-        until not _G.TeleportIsland
-    end
-end)
-Options.ToggleIsland:SetValue(false)
+        end
+    })
 
+    Tabs.Teleport:AddButton({
+        Title = "Dừng bay",
+        Description = "",
+        Callback = function()
+           toTarget(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+        end
+    })
+
+-----Fruits
 local Remote_GetFruits = game.ReplicatedStorage:FindFirstChild("Remotes").CommF_:InvokeServer("GetFruits");
 Table_DevilFruitSniper = {}
 ShopDevilSell = {}
