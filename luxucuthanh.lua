@@ -4876,7 +4876,15 @@ ToggleAimbotGun:OnChanged(function(Value)
 end)
 Options.ToggleAimbotGun:SetValue(false)
 
+Tabs.Player:AddButton({
+    Title = "Aimbot 99%",
+    Description = "Script Aimbot",
+    Callback = function()
+    
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhEmTu/Hazz/refs/heads/main/Aimbot.lua"))()
 
+  end
+  })
 
 local gg = getrawmetatable(game)
 local old = gg.__namecall
