@@ -2,6 +2,82 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
+repeat wait() until game.Players
+repeat wait() until game.Players.LocalPlayer
+repeat wait() until game.ReplicatedStorage
+repeat wait() until game.ReplicatedStorage:FindFirstChild("Remotes");
+repeat wait() until game.Players.LocalPlayer:FindFirstChild("PlayerGui");
+repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main");
+repeat wait() until game:GetService("Players")
+repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Energy")
+if not game:IsLoaded() then repeat game.Loaded:Wait() until game:IsLoaded() end
+--Team
+if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
+    repeat
+        wait()
+        if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
+            if getgenv().Team == "Pirate" then
+                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Activated)) do
+                    v.Function()
+                end
+            elseif getgenv().Team == "Marine" then
+                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Activated)) do
+                    v.Function()
+                end
+            else
+                for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Activated)) do
+                    v.Function()
+                end
+            end
+        end
+    until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
+end
+
+local Plr = game.Players.LocalPlayer
+local Connection = {}
+local Highlight_Folder = Instance.new("Folder")
+Highlight_Folder.Name = "Highlight_Folder"
+Highlight_Folder.Parent = game.CoreGui
+local Highlight = function(Target)
+    local Highlight = Instance.new("Highlight")
+    Highlight.Name = Target.Name
+    Highlight.FillColor = Color3.fromRGB(255, 255, 0)
+    Highlight.DepthMode = "AlwaysOnTop"
+    Highlight.FillTransparency = 0.7
+    Highlight.OutlineColor = Color3.fromRGB(255, 255, 0)
+    Highlight.Parent = Highlight_Folder
+    if Target.Character then
+        Highlight.Adornee = Target.Character
+    end
+    Connection[Target] = Target.CharacterAdded:Connect(function(Characters)
+        Highlight.Adornee = Characters
+    end)
+end
+game.Players.PlayerAdded:Connect(Highlight)
+for i, v in next, game.Players:GetPlayers() do
+    Highlight(v)
+end
+game.Players.PlayerRemoving:Connect(function(PlayerRemove)
+    if Highlight_Folder[PlayerRemove.Name] then
+        Highlight_Folder[PlayerRemove.Name]:Destory()
+    end
+    if Connection[PlayerRemove.Name] then
+        Connection[PlayerRemove.Name]:Disconnect()
+    end
+end)
+
+local InputService = game:GetService("UserInputService")
+InputService.WindowFocused:Connect(
+    function()
+        game:GetService("RunService"):Set3dRenderingEnabled(true)
+    end
+)
+InputService.WindowFocusReleased:Connect(
+    function()
+        game:GetService("RunService"):Set3dRenderingEnabled(false)
+    end
+)
+
 local Window = Fluent:CreateWindow({
     Title = "R2LX HUB",
     SubTitle = "Version 1",
@@ -2438,52 +2514,33 @@ function()
 end
 )
 
-local StatusMirage = Tabs.infor:AddParagraph({
-    Title = "Trạng Thái: Server Full Moon",
-    Content = "Status: "
-})
-
-task.spawn(function()
-while task.wait() do
-pcall(function()
-    if game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149431" then
-       FullMoonStatus = "100%"
-    elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149052" then
-        FullMoonStatus = "75%"
-    elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709143733" then
-        FullMoonStatus = "50%"
-    elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709150401" then
-        FullMoonStatus = "25%"
-    elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149680" then
-        FullMoonStatus = "15%"
-    else
-        FullMoonStatus = "0%"
-    end
-end)
+local EmOiDungKhoc = Tabs.infor:AddParagraph({
+        Title = "Trạng Thái: Server Full Moon",
+        Content = ""
+    })
+    spawn(
+            function()
+                        while task.wait() do
+              pcall(  
+                    function()
+             if game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149431" then
+                        EmOiDungKhoc:SetDesc("100%")
+                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149052" then
+                        EmOiDungKhoc:SetDesc("75%")
+                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709143733" then
+                        EmOiDungKhoc:SetDesc("50%")
+                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709150401" then
+                        EmOiDungKhoc:SetDesc("25%")
+                    elseif game:GetService("Lighting").Sky.MoonTextureId=="http://www.roblox.com/asset/?id=9709149680" then
+                        EmOiDungKhoc:SetDesc("15%")
+                    else
+                        EmOiDungKhoc:SetDesc("0%")
 end
-end)
-
-task.spawn(function()
-    while task.wait() do
-        pcall(function()
-        if game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') then
-            MirageStatus = "Found"
-        else
-            MirageStatus = 'Not Found'
-         end
-    end)
- end
-end)
-
-
-spawn(function()
-    pcall(function()
-        while wait() do
-            StatusMirage:SetDesc("Mirage Island: "..MirageStatus.." | Full Moon: "..FullMoonStatus)
-        end
-    end)
-end)
-
+end
+)
+end
+end
+)
 
 local ConMeMayThangWidiBuCacAnhDi = Tabs.infor:AddParagraph({
     Title = "Trạng Thái: Boss Elite Hunter",
@@ -2509,6 +2566,8 @@ spawn(
     end
 end
 )
+
+
 local DaoNaoCac = Tabs.infor:AddParagraph({
     Title = "Trạng Thái: Đảo Kì Bí",
     Content = ""
