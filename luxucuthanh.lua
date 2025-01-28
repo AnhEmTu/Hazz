@@ -2674,6 +2674,8 @@ wait = task.wait
 main()
 
   end
+)}
+
 
 -- Tạo nút nhấn để nhập hết code
 Tabs.Main:AddButton({
