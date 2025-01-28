@@ -1,7 +1,3 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
-
 repeat wait() until game.Players
 repeat wait() until game.Players.LocalPlayer
 repeat wait() until game.ReplicatedStorage
@@ -77,6 +73,10 @@ InputService.WindowFocusReleased:Connect(
         game:GetService("RunService"):Set3dRenderingEnabled(false)
     end
 )
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 local Window = Fluent:CreateWindow({
     Title = "R2LX HUB",
@@ -2488,7 +2488,6 @@ Tabs.infor:AddButton({
         setclipboard("YouTube: ?¿?¿")
         end
     })
-   
 ---------------TabStatus
 
     local DropdownSelectWeapon = Tabs.Main:AddDropdown("DropdownSelectWeapon", {
@@ -4485,8 +4484,7 @@ player.CharacterAdded:Connect(function(character)
     OptimizeCharacter(character)
 end)
     
-    
-        local SKill = Tabs.Setting:AddSection("Cài Đặt Mastery")
+local SKill = Tabs.Setting:AddSection("Cài Đặt Mastery")
 local ToggleZ = Tabs.Setting:AddToggle("ToggleZ", {Title = "Skill Z", Default = true })
 ToggleZ:OnChanged(function(Value)
     SkillZ = Value
