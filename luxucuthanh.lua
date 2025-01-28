@@ -1746,7 +1746,7 @@ while wait() do
                         BillboardGui.StudsOffset = Vector3.new(0, 2.5, 0)
 
                         TextLabel.Parent = BillboardGui
-                        TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        TextLabel.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
                         TextLabel.BackgroundTransparency = 1.000
                         TextLabel.Size = UDim2.new(0, 200, 0, 50)
                         TextLabel.Font = Enum.Font.GothamBold
@@ -5003,7 +5003,16 @@ function InfAb()
     end
 end	
 ---Ok
+Tabs.Player:AddButton({
+    Title = "Bay",
+    Description = "Script Bay",
+    Callback = function()
+    
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhEmTu/R2LXHUB/refs/heads/main/script%20fly.lua"))()
 
+  end
+  })
+  
 local Teleport = Tabs.Teleport:AddSection("Di Chuyển Thế Giới")
 
 Tabs.Teleport:AddButton({
