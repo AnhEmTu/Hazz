@@ -6300,7 +6300,7 @@ Tabs.Shop:AddButton({
 	end
 })
 
-local Mastery = Tabs.Shop:AddSection("Fighting Styles")
+local Mastery = Tabs.Shop:AddSection("Vật Phẩm")
 
 
 Tabs.Shop:AddButton({
@@ -6376,12 +6376,18 @@ Tabs.Shop:AddButton({
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman")
 	end
 })
+Tabs.Shop:AddButton({
+	Title = "Mua sanguine art",
+	Description = "",
+	Callback = function()
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt")
+	end
+})
 
-
-local Mastery = Tabs.Shop:AddSection("Misc Items")
+local Mastery = Tabs.Shop:AddSection("Vật Phẩm Khác")
 
 Tabs.Shop:AddButton({
-	Title = "Refund Stats",
+	Title = "Hoàn trả chỉ số",
 	Description = "",
 	Callback = function()
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","1")
@@ -6389,7 +6395,7 @@ Tabs.Shop:AddButton({
 	end
 })
 Tabs.Shop:AddButton({
-	Title = "Reroll Race",
+	Title = "Random Tộc",
 	Description = "",
 	Callback = function()
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
