@@ -1,4 +1,4 @@
-    Callback = function()
+
     getgenv().setting = {
     Fov = 50,
     Color = Color3.fromRGB(191, 255, 209),
