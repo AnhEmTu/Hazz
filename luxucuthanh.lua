@@ -2776,7 +2776,18 @@ end
         end)
 
 
+
+local Mastery = Tabs.Main:AddSection("Cày Tiền")    
+Tabs.Main:AddButton({
+    Title = "Cày Tiền (Bay)",
+    Description = "Script Cày Tiền",
+    Callback = function()
     
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhEmTu/Hazz/refs/heads/main/chest.lua"))()
+
+  end
+  })
+  
 local Mastery = Tabs.Main:AddSection("Cày Thông Thạo")
     local DropdownMastery = Tabs.Main:AddDropdown("DropdownMastery", {
         Title = "Chọn Chế Độ Cày Thông Thạo",
