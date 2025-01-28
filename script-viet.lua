@@ -13,7 +13,10 @@ _G.Key = "abf7a94acc2525d43e2fc7224622e35968dbfa50"
 _G.KeyImput = "string"
 
 function MakeScriptHub()
-	loadstring(game:HttpGet(('https://raw.githubusercontent.com/AnhEmTu/Hazz/refs/heads/main/luxucuthanh.lua')))()	
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhEmTu/Hazz/refs/heads/main/luxucuthanh.lua"))()
+
+
+
 	
 end
 
