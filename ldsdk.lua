@@ -210,8 +210,9 @@ Ms = "Dark Master"
 NameQuest = "SkyQuest"
 QuestLv = 2
 NameMon = "Dark Master"
-CFrameQ = CFrame.new(-4842.1372070313, 717.69543457031, -2623.0483398438)
-CFrameMon = CFrame.new(-5148.1650390625, 439.04571533203, -2332.9611816406)
+CFrameMon = CFrame.new(-4842.1372070313, 717.69543457031, -2623.0483398438)
+CFrameQ = CFrame.new(-5148.1650390625, 439.04571533203, -2332.9611816406)
+
 elseif Lv==190 or Lv<=209 or SelectMonster == "Prisoner" then
 Ms = "Prisoner"
 NameQuest = "PrisonerQuest"
