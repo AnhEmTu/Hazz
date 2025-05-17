@@ -139,8 +139,8 @@ Ms = "Monkey"
 NameQuest = "JungleQuest"
 QuestLv = 1
 NameMon = "Monkey"
-CFrameMon = CFrame.new(-1601.6553955078, 36.85213470459, 153.38809204102)
-CFrameMon = CFrame.new(-1448.1446533203, 50.851993560791, 63.60718536377)
+CFrameQ = CFrame.new(-1601.6553955078, 36.85213470459, 153.38809204102) ---Toạ độ npc
+CFrameMon = CFrame.new(-1448.1446533203, 50.851993560791, 63.60718536377) --- Toạ độ quái
 elseif Lv==15 or Lv<=29 or SelectMonster == "Gorilla" then
 Ms = "Gorilla"
 NameQuest = "JungleQuest"
@@ -174,8 +174,8 @@ Ms = "Desert Officer"
 NameQuest = "DesertQuest"
 QuestLv = 2
 NameMon = "Desert Officer"
-CFrameQ = CFrame.new(896.51721191406, 6.4384617805481, 4390.1494140625)
-CFrameMon = CFrame.new(1547.1510009766, 14.452038764954, 4381.8002929688)
+CFrameQ = CFrame.new(894.488647, 5.14000702, 4392.43359, 0.819155693, -0, -0.573571265, 0, 1, -0, 0.573571265, 0, 0.819155693)
+CFrameMon = CFrame.new(1608.2822265625, 8.614224433898926, 4371.00732421875)               
 elseif Lv==90 or Lv<=99 or SelectMonster == "Snow Bandit" then
 Ms = "Snow Bandit"
 NameQuest = "SnowQuest"
@@ -202,7 +202,7 @@ Ms = "Sky Bandit"
 NameQuest = "SkyQuest"
 QuestLv = 1
 NameMon = "Sky Bandit"
-CFrameMon = CFrame.new(-4842.1372070313, 717.69543457031, -2623.0483398438)
+CFrameQ = CFrame.new(-4842.1372070313, 717.69543457031, -2623.0483398438)
 CFrameMon = CFrame.new(-4955.6411132813, 365.46365356445, -2908.1865234375)
 elseif Lv==175 or Lv<=189 or SelectMonster == "Dark Master" then
 Ms = "Dark Master"
@@ -2106,19 +2106,8 @@ spawn(function()
       end)
     end
     end)
-local Plr = game:GetService("Players").LocalPlayer
-local Mouse = Plr:GetMouse()
-Mouse.Button1Down:connect(function()
-	if not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then
-		return
-	end
-	if not Mouse.Target then
-		return
-	end
-	if CTRL then
-		Plr.Character:MoveTo(Mouse.Hit.p)
-	end
-end)
+
+-- Bay
 function CheckMaterial(matname)
 for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
 if type(v)=="table" then
@@ -6535,19 +6524,29 @@ ToggleAutoT:OnChanged(function(Value)
     end
     end)
 local ToggleAutoY = Tabs.Setting:AddToggle("ToggleAutoY", {Title="Bật Tộc V4", Description="", Default=false })
-ToggleAutoY:OnChanged(function(Value)
-    _G.AutoY=Value
+ToggleAutoY:OnChanged(function(EmGioDayVuiTinhYeuMoi)
+    _G.AutoY=EmGioDayVuiTinhYeuMoi
 end)
 Options.ToggleAutoY:SetValue(false)
-spawn(function()
-    while wait() do
-        pcall(function()
-            if _G.AutoY then
-                game:GetService("VirtualInputManager"):SendKeyEvent(true, "Y", false, game)
-                wait()
-                game:GetService("VirtualInputManager"):SendKeyEvent(false, "Y", false, game)
+task.spawn(function()
+    local lastCheckTime = 0
+    while true do
+        task.wait(0.1)
+        if _G.AutoY then
+            local currentTime = tick()
+            if currentTime - lastCheckTime >= 0.5 then
+                lastCheckTime = currentTime
+                local character = game.Players.LocalPlayer.Character
+                if character and character:FindFirstChild("RaceEnergy") and
+                   character.RaceEnergy.Value >= 1 and
+                   not character.RaceTransformed.Value then
+                    local be = game:GetService("VirtualInputManager")
+                    be:SendKeyEvent(true, "Y", false, game)
+                    task.wait(0.1)
+                    be:SendKeyEvent(false, "Y", false, game)
+                end
             end
-        end)
+        end
     end
 end)
 local ToggleAutoKen = Tabs.Setting:AddToggle("ToggleAutoKen", {Title="Bật Haki Quan Sât", Description="", Default=false })
@@ -7093,7 +7092,7 @@ Tabs.Status:AddButton({
         local maxplayers = math.huge
         local serversmaxplayer;
         local goodserver;
-        local gamelink = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100" 
+        local gamelink = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=1000" 
         function serversearch()
             for _, v in pairs(game:GetService("HttpService"):JSONDecode(game:HttpGetAsync(gamelink)).data) do
                 if type(v) == "table" and v.playing ~= nil and maxplayers > v.playing then
@@ -7107,12 +7106,12 @@ Tabs.Status:AddButton({
             serversearch()
             for i,v in pairs(game:GetService("HttpService"):JSONDecode(game:HttpGetAsync(gamelink))) do
                 if i == "nextPageCursor" then
-                    if gamelink:find("&cursor=") then
-                        local a = gamelink:find("&cursor=")
+                    if gamelink:find("&ecursor=") then
+                        local a = gamelink:find("&ecursor=")
                         local b = gamelink:sub(a)
                         gamelink = gamelink:gsub(b, "")
                     end
-                    gamelink = gamelink .. "&cursor=" ..v
+                    gamelink = gamelink .. "&ecursor=" ..v
                     getservers()
                 end
             end
