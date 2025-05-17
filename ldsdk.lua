@@ -174,8 +174,8 @@ Ms = "Desert Officer"
 NameQuest = "DesertQuest"
 QuestLv = 2
 NameMon = "Desert Officer"
-CFrameQ = CFrame.new(894.488647, 5.14000702, 4392.43359, 0.819155693, -0, -0.573571265, 0, 1, -0, 0.573571265, 0, 0.819155693)
-CFrameMon = CFrame.new(1608.2822265625, 8.614224433898926, 4371.00732421875)               
+CFrameQ = CFrame.new(1608.2822265625, 8.614224433898926, 4371.00732421875)        
+CFrameMon = CFrame.new(894.488647, 5.14000702, 4392.43359, 0.819155693, -0, -0.573571265, 0, 1, -0, 0.573571265, 0, 0.819155693)       
 elseif Lv==90 or Lv<=99 or SelectMonster == "Snow Bandit" then
 Ms = "Snow Bandit"
 NameQuest = "SnowQuest"
@@ -202,8 +202,9 @@ Ms = "Sky Bandit"
 NameQuest = "SkyQuest"
 QuestLv = 1
 NameMon = "Sky Bandit"
-CFrameQ = CFrame.new(-4842.1372070313, 717.69543457031, -2623.0483398438)
-CFrameMon = CFrame.new(-4955.6411132813, 365.46365356445, -2908.1865234375)
+CFrameQ = CFrame.new(-4955.6411132813, 365.46365356445, -2908.1865234375)
+CFrameMon = CFrame.new(-4842.1372070313, 717.69543457031, -2623.0483398438)
+
 elseif Lv==175 or Lv<=189 or SelectMonster == "Dark Master" then
 Ms = "Dark Master"
 NameQuest = "SkyQuest"
